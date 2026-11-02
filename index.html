@@ -1631,11 +1631,71 @@ body {
   font-size: 16px;
   color: var(--status-good-text);
 }
+
+/* SWITCH STUDENT BUTTON & PROFILE PICKER */
+.btn-switch-student {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-switch-student:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--border-strong);
+}
+.modal-set-user-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.modal-set-user-btn:hover {
+  opacity: 0.9;
+}
+.welcome-banner {
+  background: var(--accent-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 10px 16px;
+  font-size: 13px;
+  color: var(--text-main);
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 </style>
 </head>
 <body>
 
 <div class="container">
+  <!-- WELCOME BANNER FOR OTHER STUDENTS -->
+  <div class="welcome-banner" id="firstTimeVisitorNotice">
+    <div>
+      👋 <strong>Welcome!</strong> Currently viewing as <strong id="noticeViewingName">Suryansh Singh</strong>. Are you a different student?
+    </div>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <button onclick="openProfilePickerModal()" style="font-size:12px; font-weight:700; background:var(--accent-primary); color:var(--text-inverse); border:none; padding:6px 12px; border-radius:var(--radius-xs); cursor:pointer;">Select Your Profile</button>
+      <button onclick="dismissFirstTimeNotice()" style="font-size:12px; background:none; border:none; color:var(--text-muted); cursor:pointer; padding:6px 8px;">Dismiss</button>
+    </div>
+  </div>
+
   <!-- TOP NAV BAR -->
   <header class="top-nav">
     <div class="nav-brand">
@@ -1661,14 +1721,17 @@ body {
     <div class="student-meta-col">
       <div class="student-title-row">
         <h1 class="student-name-main" id="profileStudentName">Suryansh Singh</h1>
-        <span class="verified-tag">Primary Account</span>
+        <button class="btn-switch-student" onclick="openProfilePickerModal()" title="Switch profile to any student">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 16V4m0 0L3 8m4-4l4 4m6 4v12m0 0l4-4m-4 4l-4-4"></path></svg>
+          Switch Student
+        </button>
       </div>
       <div class="student-details-sub">
         <span>Roll: <strong class="tabular-nums" id="profileEnrollment">T09104426</strong></span>
         <span>·</span>
         <span>Section: <strong id="profileSection">2</strong></span>
         <span>·</span>
-        <span>S.No: <strong>91</strong></span>
+        <span>S.No: <strong id="profileSno">91</strong></span>
       </div>
     </div>
 
@@ -1890,13 +1953,36 @@ body {
   </div>
 </div>
 
+<!-- PROFILE PICKER MODAL (INSTANT USER SWITCHER) -->
+<div class="modal-backdrop" id="profilePickerModalBackdrop" onclick="if(event.target===this)closeProfilePickerModal()">
+  <div class="modal-dialog" style="max-width:520px; max-height:85vh; display:flex; flex-direction:column; overflow:hidden;">
+    <div class="modal-sticky-topbar">
+      <div style="font-weight:700; font-size:15px; color:var(--text-main);">Select Your Profile</div>
+      <button class="modal-close-icon-btn" onclick="closeProfilePickerModal()">✕</button>
+    </div>
+    <div style="padding:16px 20px; display:flex; flex-direction:column; overflow:hidden; flex:1;">
+      <div style="font-size:13px; color:var(--text-muted); margin-bottom:12px; line-height:1.4;">
+        Select your name to personalize attendance tracking, schedule recovery, and internal marks on your device.
+      </div>
+      <div class="search-input-wrap" style="margin-bottom:14px;">
+        <svg class="search-icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" class="search-input-field" id="pickerSearchInput" placeholder="Type name, roll number, or S.No..." oninput="filterProfilePicker(this.value)">
+      </div>
+      <div id="profilePickerList" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:6px; padding-right:2px;">
+        <!-- Injected list of students -->
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 // ==========================================================================
 // CLIENT DATA & SCHEDULE RECOVERY ENGINE
 // ==========================================================================
-const MY_NAME = 'Suryansh Singh';
-const MY_ENROLLMENT = 'T09104426';
-const MY_SECTION = '2';
+let MY_NAME = 'Suryansh Singh';
+let MY_ENROLLMENT = 'T09104426';
+let MY_SECTION = '2';
+let MY_SNO = '91';
 const MARKS_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_kngkSlD_oJEdGQ-lLT9qJEKZ5sQEFSVwVNrkjz1SJsEOhSvu1PlcTq0K3qmQoimohA/exec';
 const ATTENDANCE_CSV_URL = 'https://docs.google.com/spreadsheets/d/1z5N-9TGIYRasZVfBdJTsyyKNKcAgpflvlYzJqm7iSG4/export?format=csv';
 
@@ -2371,9 +2457,17 @@ function renderMarksTab() {
 
   if (!me) return;
 
-  document.getElementById('marksTotalVal').innerHTML = `${me.total5.toFixed(2)} <span style="font-size:14px; color:var(--text-muted); font-weight:500;">/ 200</span>`;
-  document.getElementById('marksAvgPaperVal').textContent = `Avg ${(me.total5 / 5).toFixed(2)} / 40 per paper`;
-  document.getElementById('marksRankVal').innerHTML = `#${me.rank5} <span style="font-size:14px; color:var(--text-muted); font-weight:500;">of ${totals.total_valid_students}</span>`;
+  const totalScoreVal = (me && typeof me.total5 === 'number') 
+    ? me.total5.toFixed(2) 
+    : (me && me.parts ? Object.values(me.parts).reduce((s, x) => s + (x.final || 0), 0).toFixed(2) : '—');
+  const avgPaperVal = (me && typeof me.total5 === 'number')
+    ? (me.total5 / 5).toFixed(2)
+    : (parseFloat(totalScoreVal) / 5).toFixed(2);
+  const rankDisplay = (me && me.rank5) ? `#${me.rank5}` : 'Unranked';
+
+  document.getElementById('marksTotalVal').innerHTML = `${totalScoreVal} <span style="font-size:14px; color:var(--text-muted); font-weight:500;">/ 200</span>`;
+  document.getElementById('marksAvgPaperVal').textContent = `Avg ${avgPaperVal} / 40 per paper`;
+  document.getElementById('marksRankVal').innerHTML = `${rankDisplay} <span style="font-size:14px; color:var(--text-muted); font-weight:500;">of ${totals.total_valid_students}</span>`;
   document.getElementById('topperNameSub').textContent = `${totals.best_student_name} (${totals.best_total.toFixed(2)})`;
 
   const theoryPapers = [
@@ -2386,7 +2480,7 @@ function renderMarksTab() {
 
   const list = document.getElementById('theoryPapersAccordionList');
   list.innerHTML = theoryPapers.map((paper, idx) => {
-    const p = me.parts[paper.key];
+    const p = me.parts ? me.parts[paper.key] : null;
     const stat = stats[paper.key];
     const score = p ? p.final : 0;
     const diff = stat ? (score - stat.avg).toFixed(2) : '0';
@@ -2738,14 +2832,26 @@ function openStudentModal(enrollment) {
     topbarCtx.textContent = `${s.name} · ${s.enrollment}`;
   }
 
+  const isCurrent = s.enrollment === MY_ENROLLMENT;
+
   document.getElementById('modalStudentHeader').innerHTML = `
-    <h2 class="modal-student-name">${s.name}</h2>
-    <div class="modal-student-meta-row">
-      <span>Enrollment: <strong>${s.enrollment}</strong></span>
-      <span>·</span>
-      <span>Section: <strong>${s.section}</strong></span>
-      <span>·</span>
-      <span>S.No: <strong>${s.sno}</strong></span>
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
+      <div>
+        <h2 class="modal-student-name">${s.name}</h2>
+        <div class="modal-student-meta-row">
+          <span>Enrollment: <strong>${s.enrollment}</strong></span>
+          <span>·</span>
+          <span>Section: <strong>${s.section}</strong></span>
+          <span>·</span>
+          <span>S.No: <strong>${s.sno}</strong></span>
+        </div>
+      </div>
+      <div>
+        ${!isCurrent 
+          ? `<button class="modal-set-user-btn" onclick="setPrimaryStudent('${s.enrollment}', true); closeStudentModal();">⭐ Set as My Profile</button>`
+          : `<span style="font-size:12px; font-weight:700; color:var(--status-good-text); background:var(--status-good-bg); border:1px solid var(--status-good-border); padding:6px 14px; border-radius:var(--radius-sm); display:inline-block;">Active Profile</span>`
+        }
+      </div>
     </div>
   `;
 
@@ -3210,6 +3316,114 @@ async function handleRefresh(silent = false) {
   }
 }
 
+// ==========================================================================
+// PROFILE SELECTOR & DYNAMIC IDENTITY ENGINE
+// ==========================================================================
+function setPrimaryStudent(enrollment, save = true) {
+  const s = ALL_STUDENTS.find(x => x.enrollment === enrollment);
+  if (!s) return;
+  MY_ENROLLMENT = s.enrollment;
+  MY_NAME = s.name;
+  MY_SECTION = s.section;
+  MY_SNO = s.sno;
+
+  if (save) {
+    try {
+      localStorage.setItem('mca_my_enrollment', s.enrollment);
+    } catch(e) {}
+    dismissFirstTimeNotice();
+  }
+
+  // Update header UI
+  const nameEl = document.getElementById('profileStudentName');
+  if (nameEl) nameEl.textContent = s.name;
+  const enrollEl = document.getElementById('profileEnrollment');
+  if (enrollEl) enrollEl.textContent = s.enrollment;
+  const secEl = document.getElementById('profileSection');
+  if (secEl) secEl.textContent = s.section;
+  const snoEl = document.getElementById('profileSno');
+  if (snoEl) snoEl.textContent = s.sno;
+  const noticeName = document.getElementById('noticeViewingName');
+  if (noticeName) noticeName.textContent = s.name;
+
+  // Update document title
+  document.title = `${s.name} · Attendance, Marks & Batch Leaderboard`;
+
+  // Re-render
+  renderAttendanceTab();
+  renderMarksTab();
+  renderLeaderboardTab();
+
+  if (save) {
+    showToast(`Active profile set to ${s.name} (${s.enrollment})`);
+  }
+}
+
+function openProfilePickerModal() {
+  const modal = document.getElementById('profilePickerModalBackdrop');
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    const input = document.getElementById('pickerSearchInput');
+    if (input) {
+      input.value = '';
+      setTimeout(() => input.focus(), 100);
+    }
+    filterProfilePicker('');
+  }
+}
+
+function closeProfilePickerModal() {
+  const modal = document.getElementById('profilePickerModalBackdrop');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+function filterProfilePicker(query) {
+  const q = query.toLowerCase().trim();
+  const listEl = document.getElementById('profilePickerList');
+  if (!listEl) return;
+
+  const matches = ALL_STUDENTS.filter(s => {
+    return s.name.toLowerCase().includes(q) || s.enrollment.toLowerCase().includes(q) || String(s.sno).includes(q);
+  });
+
+  if (matches.length === 0) {
+    listEl.innerHTML = `<div style="text-align:center; padding:24px; color:var(--text-muted); font-size:13px;">No student found matching "${query}"</div>`;
+    return;
+  }
+
+  listEl.innerHTML = matches.map(s => {
+    const isCurrent = s.enrollment === MY_ENROLLMENT;
+    const m = COMPILED_MARKS.students[s.enrollment];
+    const marksText = m && m.total5 ? `${m.total5.toFixed(2)}/200` : 'Marks pending';
+    return `
+      <div onclick="selectProfileFromPicker('${s.enrollment}')" style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:${isCurrent ? 'var(--accent-subtle)' : 'var(--bg-subtle)'}; border:1px solid ${isCurrent ? 'var(--accent-primary)' : 'var(--border-subtle)'}; border-radius:var(--radius-sm); cursor:pointer; transition:all 0.15s ease;">
+        <div>
+          <div style="font-weight:700; font-size:14px; color:var(--text-main);">${s.name} ${isCurrent ? '<span style="font-size:11px; font-weight:700; color:var(--accent-primary); margin-left:6px;">(Current)</span>' : ''}</div>
+          <div style="font-size:12px; color:var(--text-muted); font-family:var(--font-mono); margin-top:2px;">Roll: ${s.enrollment} · Sec ${s.section} · S.No ${s.sno} · Att: ${s.totalPct.toFixed(1)}% · ${marksText}</div>
+        </div>
+        <button style="font-size:12px; font-weight:700; padding:6px 14px; border-radius:var(--radius-xs); border:1px solid var(--border-subtle); background:${isCurrent ? 'var(--accent-primary)' : 'var(--bg-surface)'}; color:${isCurrent ? 'var(--text-inverse)' : 'var(--text-main)'}; cursor:pointer;">
+          ${isCurrent ? 'Active' : 'Select'}
+        </button>
+      </div>
+    `;
+  }).join('');
+}
+
+function selectProfileFromPicker(enrollment) {
+  setPrimaryStudent(enrollment, true);
+  closeProfilePickerModal();
+}
+
+function dismissFirstTimeNotice() {
+  const banner = document.getElementById('firstTimeVisitorNotice');
+  if (banner) banner.style.display = 'none';
+  try { localStorage.setItem('mca_notice_dismissed', 'true'); } catch(e) {}
+}
+
 // Hotkey for search
 document.addEventListener('keydown', (e) => {
   if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
@@ -3218,6 +3432,7 @@ document.addEventListener('keydown', (e) => {
   }
   if (e.key === 'Escape') {
     closeStudentModal();
+    closeProfilePickerModal();
     document.getElementById('searchDropdown').classList.remove('active');
   }
 });
@@ -3256,6 +3471,21 @@ try {
     }
   }
 } catch(e) {}
+
+// Check URL parameter: ?student=T... or ?roll=T... or ?id=...
+const urlParams = new URLSearchParams(window.location.search);
+const paramEnroll = urlParams.get('student') || urlParams.get('roll') || urlParams.get('id');
+const savedEnroll = paramEnroll || localStorage.getItem('mca_my_enrollment');
+
+if (savedEnroll && ALL_STUDENTS.some(s => s.enrollment === savedEnroll)) {
+  setPrimaryStudent(savedEnroll, Boolean(paramEnroll));
+} else {
+  // If first visit without any saved selection, show the welcome banner
+  const banner = document.getElementById('firstTimeVisitorNotice');
+  if (banner && !localStorage.getItem('mca_notice_dismissed')) {
+    banner.style.display = 'flex';
+  }
+}
 
 // Boot
 renderAttendanceTab();
