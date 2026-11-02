@@ -2335,7 +2335,7 @@ body {
             <button class="target-pill-btn" onclick="setTargetPct(85)">85%</button>
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-            <span class="sprint-pill alert" style="font-size:10px; padding:2px 8px;">⏳ Cutoff: Thu, Nov 5 (24 Left)</span>
+            <span class="sprint-pill alert" id="heroCutoffBadge" style="font-size:10px; padding:2px 8px;">⏳ Cutoff: Thu, Nov 5</span>
             <button class="sprint-link-btn" onclick="switchMainTab('sim')" style="font-size:11px; padding:3px 8px;">
               ⚡ Simulator
             </button>
@@ -2442,10 +2442,22 @@ body {
         Simulate how attending or missing classes in the remaining 4 days (Nov 2 – Nov 5: <strong>24 classes total</strong>) affects your final percentage on November 5.
       </p>
 
+      <!-- Scope Selector: Live Clock vs Full Week -->
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px; background:var(--bg-subtle); padding:8px 14px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+        <div style="font-size:12px; font-weight:700; color:var(--text-main); display:flex; align-items:center; gap:6px;">
+          <span>⏱️ Sprint Scope:</span>
+          <span style="font-weight:600; color:var(--accent-blue);" id="simScopeLabel">Live Clock (From Tonight)</span>
+        </div>
+        <div style="display:flex; gap:6px;">
+          <button class="section-pill-btn active" id="btnScopeLive" onclick="setSimScope('live')">⏱️ Live Clock</button>
+          <button class="section-pill-btn" id="btnScopeFull" onclick="setSimScope('full')">📅 Full Sprint (24)</button>
+        </div>
+      </div>
+
       <div class="sim-presets-row">
-        <button class="sim-preset-btn" onclick="applySimPreset('all')">Attend All 24 (100% Sprint)</button>
+        <button class="sim-preset-btn" id="simPresetAllBtn" onclick="applySimPreset('all')">Attend All (100% Sprint)</button>
         <button class="sim-preset-btn" id="simPresetThresholdBtn" onclick="applySimPreset('threshold')">Exact 75% Target</button>
-        <button class="sim-preset-btn" onclick="applySimPreset('theory')">Attend Theory Only (Skip Labs)</button>
+        <button class="sim-preset-btn" id="simPresetTheoryBtn" onclick="applySimPreset('theory')">Attend Theory Only</button>
         <button class="sim-preset-btn" onclick="applySimPreset('none')">Skip All (Worst Case)</button>
       </div>
 
@@ -2888,37 +2900,116 @@ const SECTION_TIMETABLES = {
   }
 };
 
-function getSprintBreakdown(sec) {
-  const sKey = (sec === '1' || sec === 1 || sec === 'A') ? '1' : '2';
-  const sprintDays = ['Mon', 'Tue', 'Wed', 'Thu'];
-  const tt = SECTION_TIMETABLES[sKey].schedule;
-  
-  let totalUnits = 0;
-  const subjectUnits = { ds: 0, cn: 0, osl: 0, dbms: 0, java: 0, pp1: 0 };
-  const dailyPlans = [];
-
-  sprintDays.forEach(day => {
-    const periods = tt[day] || [];
-    let dayUnits = 0;
-    periods.forEach(p => {
-      dayUnits += p.units;
-      if (subjectUnits[p.key] !== undefined) subjectUnits[p.key] += p.units;
-    });
-    totalUnits += dayUnits;
-    dailyPlans.push({ day, dayUnits, periods });
-  });
-
-  return { totalUnits, subjectUnits, dailyPlans, sectionName: SECTION_TIMETABLES[sKey].sectionName };
+function parseTimeToDate(dateStr, timeStr) {
+  const parts = timeStr.split('-').map(s => s.trim());
+  function toHour24(t) {
+    let [h, m] = t.split(':').map(Number);
+    if (h >= 1 && h <= 5) h += 12; // 1 PM - 5 PM
+    return { h, m };
+  }
+  const start = toHour24(parts[0]);
+  const end = toHour24(parts[1]);
+  const [y, mo, d] = dateStr.split('-').map(Number);
+  const startDate = new Date(y, mo - 1, d, start.h, start.m, 0);
+  const endDate = new Date(y, mo - 1, d, end.h, end.m, 0);
+  return { startDate, endDate };
 }
 
-function computeScheduleRecovery(held, attended, target, sec, subjectKey) {
+let activeSprintScopeMode = 'live'; // 'live' (dynamic clock) or 'full' (24 classes)
+
+function getLiveSprintBreakdown(sec, forceMode) {
+  const now = new Date();
+  const sKey = (sec === '1' || sec === 1 || sec === 'A') ? '1' : '2';
+  const tt = SECTION_TIMETABLES[sKey].schedule;
+  const useFull = (forceMode === 'full' || (!forceMode && activeSprintScopeMode === 'full'));
+  
+  const sprintDays = [
+    { day: 'Mon', dateStr: '2026-11-02' },
+    { day: 'Tue', dateStr: '2026-11-03' },
+    { day: 'Wed', dateStr: '2026-11-04' },
+    { day: 'Thu', dateStr: '2026-11-05' }
+  ];
+
+  let remainingUnits = 0;
+  let passedUnits = 0;
+  let totalUnits = 24;
+  const remainingBySubject = { ds: 0, cn: 0, osl: 0, dbms: 0, java: 0, pp1: 0 };
+  const dailyPlans = [];
+
+  sprintDays.forEach(sd => {
+    const periods = tt[sd.day] || [];
+    let dayUnits = 0;
+    let dayPassedUnits = 0;
+    const periodStatuses = [];
+
+    periods.forEach(p => {
+      const { endDate } = parseTimeToDate(sd.dateStr, p.time);
+      const isPast = useFull ? false : (now >= endDate);
+      if (isPast) {
+        passedUnits += p.units;
+        dayPassedUnits += p.units;
+      } else {
+        remainingUnits += p.units;
+        dayUnits += p.units;
+        if (remainingBySubject[p.key] !== undefined) {
+          remainingBySubject[p.key] += p.units;
+        }
+      }
+      periodStatuses.push({ ...p, isPast });
+    });
+
+    dailyPlans.push({
+      day: sd.day,
+      dateStr: sd.dateStr,
+      dayUnits,
+      dayPassedUnits,
+      periods: periodStatuses
+    });
+  });
+
+  const activeRemainingDays = dailyPlans.filter(d => d.dayUnits > 0);
+  const remainingDaysCount = activeRemainingDays.length;
+  const activeDaysText = remainingDaysCount > 0 ? activeRemainingDays.map(d => d.day).join('–') : 'Completed';
+
+  return {
+    totalUnits,
+    remainingUnits,
+    passedUnits,
+    subjectUnits: remainingBySubject,
+    dailyPlans,
+    remainingDaysCount,
+    activeDaysText,
+    sectionName: SECTION_TIMETABLES[sKey].sectionName,
+    isFullMode: useFull
+  };
+}
+
+function computeScheduleRecovery(held, attended, target, sec, subjectKey, forceMode) {
   const currentPct = held > 0 ? (attended / held * 100) : 0;
   const targetRatio = target / 100;
   
-  const sprint = getSprintBreakdown(sec || MY_SECTION);
-  let remClasses = sprint.totalUnits; // 24 classes across Mon-Thu
+  const sprint = getLiveSprintBreakdown(sec || MY_SECTION, forceMode);
+  let remClasses = sprint.remainingUnits;
   if (subjectKey && sprint.subjectUnits[subjectKey] !== undefined) {
     remClasses = sprint.subjectUnits[subjectKey];
+  }
+
+  if (remClasses === 0) {
+    return {
+      status: currentPct >= target ? 'safe' : 'impossible',
+      currentPct,
+      remClasses: 0,
+      finalHeld: held,
+      needed: 0,
+      canMiss: 0,
+      daysBuffer: '0.0',
+      maxAchievablePct: currentPct,
+      worstCasePct: currentPct,
+      shortfall: currentPct >= target ? 0 : Math.ceil(targetRatio * held - attended),
+      headline: currentPct >= target ? `Semester Sprint Concluded: Attendance Secured (≥ ${target}%).` : `Semester Sprint Concluded: Attendance Shortage (< ${target}%).`,
+      subnote: `All semester classes concluded as of Nov 5 cutoff.`,
+      recoveryNote: `Semester concluded.`
+    };
   }
 
   const finalHeld = held + remClasses;
@@ -2942,7 +3033,7 @@ function computeScheduleRecovery(held, attended, target, sec, subjectKey) {
       worstCasePct,
       shortfall,
       headline: `Threshold Capped: Mathematically impossible to reach ${target}% before Nov 5 cutoff.`,
-      subnote: `Even with 100% attendance in all ${remClasses} remaining sprint classes, maximum achievable is ${maxAchievablePct.toFixed(2)}% (short by ${shortfall} class${shortfall > 1 ? 'es' : ''}). Immediate medical / condonation request required.`,
+      subnote: `Even with 100% attendance in all ${remClasses} remaining classes (${sprint.activeDaysText}), max achievable is ${maxAchievablePct.toFixed(2)}% (short by ${shortfall} class${shortfall > 1 ? 'es' : ''}). Immediate medical / condonation request required.`,
       recoveryNote: `Shortfall of ${shortfall} classes beyond Nov 5 cutoff.`
     };
   } else if (currentPct >= target) {
@@ -2958,13 +3049,12 @@ function computeScheduleRecovery(held, attended, target, sec, subjectKey) {
       maxAchievablePct,
       worstCasePct,
       headline: canMiss >= remClasses
-        ? `Fully Guaranteed Safe: Even if you miss all ${remClasses} remaining classes, you finish at ${worstCasePct.toFixed(2)}% (≥ ${target}%).`
+        ? `Fully Guaranteed Safe: Even if you miss all ${remClasses} remaining classes (${sprint.activeDaysText}), you finish at ${worstCasePct.toFixed(2)}% (≥ ${target}%).`
         : `Runway Buffer: Safe. Can afford to skip up to ${canMiss} of ${remClasses} remaining classes and still finish ≥ ${target}%.`,
-      subnote: `Need to attend at least ${neededFromSprint} of ${remClasses} sprint classes. Maximum achievable with 100% sprint: ${maxAchievablePct.toFixed(2)}%.`,
+      subnote: `Need to attend at least ${neededFromSprint} of ${remClasses} remaining classes (${sprint.activeDaysText}). Max achievable: ${maxAchievablePct.toFixed(2)}%.`,
       recoveryNote: `Safe with ${canMiss} class skips buffer (~${daysBuffer} days).`
     };
   } else {
-    // Current is below target but mathematically recoverable!
     const daysBuffer = (canMiss / 6.0).toFixed(1);
     return {
       status: 'danger',
@@ -2976,7 +3066,7 @@ function computeScheduleRecovery(held, attended, target, sec, subjectKey) {
       daysBuffer,
       maxAchievablePct,
       worstCasePct,
-      headline: `High Stakes: Must attend at least ${neededFromSprint} of ${remClasses} remaining sprint classes to reach ${target}%.`,
+      headline: `High Stakes: Must attend at least ${neededFromSprint} of ${remClasses} remaining classes (${sprint.activeDaysText}) to reach ${target}%.`,
       subnote: `Bunk runway allowance: Can skip at most ${canMiss} class${canMiss === 1 ? '' : 'es'}. 100% sprint attendance reaches ${maxAchievablePct.toFixed(2)}%.`,
       recoveryNote: `Must attend ${neededFromSprint} of ${remClasses} remaining classes.`
     };
@@ -2995,6 +3085,12 @@ function renderAttendanceTab() {
   // Overall Recovery Calculation with Section & Cutoff
   const overallRecovery = computeScheduleRecovery(me.totalHeld, effectiveAttended, targetPct, me.section);
   const status = overallRecovery.status; // 'safe', 'danger', or 'impossible'
+
+  const sprintLive = getLiveSprintBreakdown(me.section);
+  const cutoffBadge = document.getElementById('heroCutoffBadge');
+  if (cutoffBadge) {
+    cutoffBadge.textContent = `⏳ Cutoff: Thu, Nov 5 (${sprintLive.remainingUnits} Classes / ${sprintLive.remainingDaysCount} Days Remain)`;
+  }
 
   // Hero Card Big Number & Ratio
   document.getElementById('heroAttPct').textContent = effectivePct.toFixed(2) + '%';
@@ -3117,16 +3213,35 @@ function renderAttendanceTab() {
     if (todayPeriods.length === 0) {
       todayGrid.innerHTML = `<div style="font-size:12px; color:var(--text-muted); padding:10px;">No scheduled classes for today.</div>`;
     } else {
-      todayGrid.innerHTML = todayPeriods.map(p => `
-        <div class="today-period-pill">
-          <div class="today-period-time">${p.time} · ${p.units} Unit${p.units > 1 ? 's' : ''}</div>
-          <div class="today-period-title">${p.subject}</div>
-          <div class="today-period-meta">
-            <span>${p.room}</span>
-            <span style="font-weight:700; color:var(--accent-blue);">${p.type}</span>
+      const nowTime = new Date();
+      const [curY, curMo, curD] = [nowTime.getFullYear(), nowTime.getMonth() + 1, nowTime.getDate()];
+      const curDateStr = `${curY}-${String(curMo).padStart(2,'0')}-${String(curD).padStart(2,'0')}`;
+
+      todayGrid.innerHTML = todayPeriods.map(p => {
+        let isPast = false;
+        try {
+          const { endDate } = parseTimeToDate(curDateStr, p.time);
+          isPast = nowTime >= endDate;
+        } catch(e) {}
+
+        const statusTag = isPast 
+          ? '<span style="font-size:10px; font-weight:700; color:var(--status-good-text); background:var(--status-good-bg); padding:1px 6px; border-radius:3px;">✓ Completed</span>'
+          : '<span style="font-size:10px; font-weight:700; color:var(--accent-blue); background:var(--bg-subtle); padding:1px 6px; border-radius:3px;">Upcoming</span>';
+
+        return `
+          <div class="today-period-pill" style="${isPast ? 'opacity:0.85;' : ''}">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="today-period-time">${p.time} · ${p.units} Unit${p.units > 1 ? 's' : ''}</span>
+              ${statusTag}
+            </div>
+            <div class="today-period-title">${p.subject}</div>
+            <div class="today-period-meta">
+              <span>${p.room}</span>
+              <span style="font-weight:700; color:var(--text-muted);">${p.type}</span>
+            </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
   }
 
@@ -3291,18 +3406,44 @@ function selectTimetableDay(day) {
 // ==========================================================================
 // WHAT-IF SIMULATOR TAB RENDERER
 // ==========================================================================
-let simSimulatedAttended = 11;
+let simSimulatedAttended = null;
+
+function setSimScope(mode) {
+  activeSprintScopeMode = mode;
+  const btnLive = document.getElementById('btnScopeLive');
+  const btnFull = document.getElementById('btnScopeFull');
+  if (btnLive) btnLive.classList.toggle('active', mode === 'live');
+  if (btnFull) btnFull.classList.toggle('active', mode === 'full');
+  
+  simSimulatedAttended = null; // reset to default for new scope
+  renderSimulatorTab();
+  renderAttendanceTab();
+}
 
 function renderSimulatorTab() {
   const me = getMyRecord();
   const effectivePct = (me.overallPct && me.overallPct > 0) ? me.overallPct : me.totalPct;
   const currentAttended = me.totalAttended + (me.dlRem || 0);
   const currentHeld = me.totalHeld;
-  const remClasses = 24;
+  
+  const sprint = getLiveSprintBreakdown(me.section);
+  const remClasses = sprint.remainingUnits;
   const finalHeld = currentHeld + remClasses;
+
+  // Scope label
+  const scopeLabel = document.getElementById('simScopeLabel');
+  if (scopeLabel) {
+    scopeLabel.textContent = activeSprintScopeMode === 'live' 
+      ? `Live Clock: ${remClasses} Classes Left (${sprint.activeDaysText})`
+      : 'Full Sprint: 24 Classes Total';
+  }
 
   const finalNeeded75 = Math.ceil(0.75 * finalHeld);
   const minSprintNeeded = Math.max(0, finalNeeded75 - currentAttended);
+
+  // Update preset buttons text
+  const allBtn = document.getElementById('simPresetAllBtn');
+  if (allBtn) allBtn.textContent = `Attend All (${remClasses} Classes)`;
 
   const thresholdBtn = document.getElementById('simPresetThresholdBtn');
   if (thresholdBtn) {
@@ -3315,6 +3456,13 @@ function renderSimulatorTab() {
     }
   }
 
+  const theoryBtn = document.getElementById('simPresetTheoryBtn');
+  if (theoryBtn) {
+    const theoryUnits = Math.round(remClasses * (16 / 24));
+    theoryBtn.textContent = `Theory Only (${theoryUnits} Classes)`;
+  }
+
+  // Set range slider
   const slider = document.getElementById('simRangeInput');
   if (slider) {
     slider.max = remClasses;
@@ -3326,11 +3474,12 @@ function renderSimulatorTab() {
 
   const display = document.getElementById('simSliderValDisplay');
   if (display) {
-    display.textContent = `${simSimulatedAttended} / ${remClasses} classes (${(simSimulatedAttended / remClasses * 100).toFixed(0)}%)`;
+    const pctSim = remClasses > 0 ? (simSimulatedAttended / remClasses * 100).toFixed(0) : 100;
+    display.textContent = `${simSimulatedAttended} / ${remClasses} classes (${pctSim}%)`;
   }
 
   const projectedAttended = currentAttended + simSimulatedAttended;
-  const projectedPct = (projectedAttended / finalHeld) * 100;
+  const projectedPct = finalHeld > 0 ? (projectedAttended / finalHeld * 100) : 0;
   const delta = projectedPct - effectivePct;
 
   const projPctEl = document.getElementById('simProjPct');
@@ -3371,11 +3520,11 @@ function renderSimulatorTab() {
     }
   }
 
+  // Subject Table
   const tbody = document.getElementById('simSubjectTableBody');
   if (tbody) {
-    const sprint = getSprintBreakdown(me.section);
     const subKeys = ['ds', 'cn', 'osl', 'dbms', 'java'];
-    const simFraction = simSimulatedAttended / remClasses;
+    const simFraction = remClasses > 0 ? (simSimulatedAttended / remClasses) : 1;
 
     tbody.innerHTML = subKeys.map(k => {
       const sub = me.subjects[k];
@@ -3394,7 +3543,7 @@ function renderSimulatorTab() {
             <div style="font-size:11px; color:var(--text-muted);">${sub.name}</div>
           </td>
           <td style="text-align:right; font-family:var(--font-mono);">${sub.pct.toFixed(2)}%</td>
-          <td style="text-align:right; font-family:var(--font-mono);">${remSub} classes</td>
+          <td style="text-align:right; font-family:var(--font-mono);">${remSub} classes left</td>
           <td style="text-align:right; font-family:var(--font-mono);">${simSubAtt} / ${remSub}</td>
           <td style="text-align:right; font-family:var(--font-mono); font-weight:700; color:${pass ? 'var(--status-good-text)' : 'var(--status-bad-text)'}">
             ${projSubPct.toFixed(2)}%
@@ -3419,16 +3568,17 @@ function applySimPreset(type) {
   const me = getMyRecord();
   const currentAttended = me.totalAttended + (me.dlRem || 0);
   const currentHeld = me.totalHeld;
-  const remClasses = 24;
+  const sprint = getLiveSprintBreakdown(me.section);
+  const remClasses = sprint.remainingUnits;
   const finalHeld = currentHeld + remClasses;
   const finalNeeded75 = Math.ceil(0.75 * finalHeld);
 
   if (type === 'all') {
-    simSimulatedAttended = 24;
+    simSimulatedAttended = remClasses;
   } else if (type === 'threshold') {
-    simSimulatedAttended = Math.min(24, Math.max(0, finalNeeded75 - currentAttended));
+    simSimulatedAttended = Math.min(remClasses, Math.max(0, finalNeeded75 - currentAttended));
   } else if (type === 'theory') {
-    simSimulatedAttended = 16;
+    simSimulatedAttended = Math.round(remClasses * (16 / 24));
   } else if (type === 'none') {
     simSimulatedAttended = 0;
   }
