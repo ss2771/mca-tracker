@@ -1680,6 +1680,514 @@ body {
   flex-wrap: wrap;
   gap: 8px;
 }
+
+/* ==========================================================================
+   TIMETABLE, FINAL SPRINT & WHAT-IF SIMULATOR DESIGN
+   ========================================================================== */
+.sprint-countdown-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sprint-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.sprint-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: var(--radius-xs);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+.sprint-pill.alert {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.25);
+}
+.sprint-pill.success {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border-color: rgba(16, 185, 129, 0.25);
+}
+.sprint-pill.warning {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.25);
+}
+.sprint-quick-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.sprint-link-btn {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-xs);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+.sprint-link-btn:hover {
+  background: var(--border-subtle);
+}
+
+/* Today's Classes Card */
+.today-classes-box {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-top: 8px;
+}
+.today-classes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.today-periods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+.today-period-pill {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.today-period-time {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+.today-period-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+.today-period-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Timetable Tab */
+.timetable-hero-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-xs);
+}
+.timetable-top-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.timetable-section-toggle {
+  display: flex;
+  background: var(--bg-subtle);
+  padding: 3px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  gap: 4px;
+}
+.section-pill-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--radius-xs);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.section-pill-btn.active {
+  background: var(--bg-surface);
+  color: var(--text-main);
+  box-shadow: var(--shadow-xs);
+}
+.sprint-countdown-pill {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: var(--text-main);
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.day-selector-bar {
+  display: flex;
+  background: var(--bg-subtle);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.day-tab-btn {
+  flex: 1;
+  min-width: 70px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.day-tab-btn.active {
+  background: var(--bg-surface);
+  color: var(--text-main);
+  box-shadow: var(--shadow-xs);
+}
+.cutoff-tag {
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: rgba(239, 68, 68, 0.18);
+  color: #ef4444;
+  margin-left: 4px;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+/* Timeline Period Cards */
+.timeline-periods-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.timeline-period-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: border-color 0.15s ease;
+}
+.timeline-period-item:hover {
+  border-color: var(--border-strong);
+}
+.timeline-period-item.is-lab {
+  border-left: 3px solid var(--accent-indigo);
+}
+.timeline-period-item.is-grooming {
+  border-left: 3px solid var(--status-good-bar);
+}
+.timeline-period-timebox {
+  width: 140px;
+  flex-shrink: 0;
+}
+.timeline-time-str {
+  font-size: 13px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--text-main);
+}
+.timeline-unit-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.4px;
+  margin-top: 2px;
+}
+.timeline-period-infobox {
+  flex: 1;
+}
+.timeline-sub-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.timeline-sub-code {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  padding: 2px 6px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-xs);
+  color: var(--text-muted);
+}
+.timeline-sub-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.timeline-badge-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+.timeline-badge-tag.lab {
+  background: rgba(99, 102, 241, 0.12);
+  color: #6366f1;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+.timeline-badge-tag.theory {
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+.timeline-badge-tag.grooming {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.timetable-notes-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-xs);
+}
+.timetable-rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.tt-rule-item {
+  background: var(--bg-subtle);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+/* What-If Simulator Styling */
+.sim-hero-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-xs);
+}
+.sim-presets-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.sim-preset-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.sim-preset-btn:hover {
+  background: var(--border-subtle);
+}
+.sim-slider-container {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin-bottom: 20px;
+}
+.sim-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+.sim-slider-val-badge {
+  font-size: 15px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--accent-blue);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+}
+.sim-range-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border-strong);
+  outline: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.sim-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid #ffffff;
+}
+.sim-slider-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  font-family: var(--font-mono);
+}
+.sim-results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.sim-result-box {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+.sim-result-box.full-width {
+  grid-column: 1 / -1;
+}
+.sim-res-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.sim-res-val {
+  font-size: 28px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--text-main);
+}
+.sim-res-delta {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  margin-top: 4px;
+}
+.sim-res-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.sim-status-banner {
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.sim-status-banner.pass {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+.sim-status-banner.condonation {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+.sim-status-banner.detained {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+@media (max-width: 768px) {
+  .sim-results-grid {
+    grid-template-columns: 1fr;
+  }
+  .timeline-period-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .timeline-period-timebox {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .segmented-nav-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .segmented-nav-wrap::-webkit-scrollbar {
+    display: none;
+  }
+  .segmented-nav-btn {
+    white-space: nowrap;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1746,24 +2254,69 @@ body {
     </div>
   </section>
 
-  <!-- SEGMENTED NAVIGATION (3 TABS) -->
+  <!-- SEGMENTED NAVIGATION (5 TABS) -->
   <nav class="segmented-nav-wrap">
     <button class="segmented-nav-btn active" id="tabBtnAtt" onclick="switchMainTab('att')">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-      Attendance Intelligence
+      <span>Attendance</span>
+    </button>
+    <button class="segmented-nav-btn" id="tabBtnTimetable" onclick="switchMainTab('timetable')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      <span>Timetable</span>
+    </button>
+    <button class="segmented-nav-btn" id="tabBtnSim" onclick="switchMainTab('sim')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+      <span>Simulator</span>
     </button>
     <button class="segmented-nav-btn" id="tabBtnMarks" onclick="switchMainTab('marks')">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-      Internal Marks & Audits
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+      <span>Internal Marks</span>
     </button>
     <button class="segmented-nav-btn" id="tabBtnRanks" onclick="switchMainTab('ranks')">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path></svg>
-      Batch Leaderboard & Ranks
+      <span>Leaderboard</span>
     </button>
   </nav>
 
   <!-- ATTENDANCE PANEL -->
   <main class="tab-panel active" id="panelAtt">
+    <!-- SEMESTER FINALE SPRINT COUNTDOWN CARD -->
+    <div class="sprint-countdown-card" id="sprintCountdownCard">
+      <div class="sprint-badge-row">
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span class="sprint-pill alert">🚨 Final Sprint: 4 Days Left</span>
+          <span class="sprint-pill">Cutoff: Thu, Nov 5, 2026</span>
+          <span class="sprint-pill">Remaining: 24 Classes (6/day)</span>
+        </div>
+        <div class="sprint-quick-links">
+          <button class="sprint-link-btn" onclick="switchMainTab('timetable')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            View Timetable
+          </button>
+          <button class="sprint-link-btn" onclick="switchMainTab('sim')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+            What-If Simulator
+          </button>
+        </div>
+      </div>
+      <div id="sprintStatusBannerSummary" style="font-size:13px; font-weight:600; color:var(--text-main); line-height:1.5;">
+        <!-- Injected via JavaScript -->
+      </div>
+      <!-- Today's Schedule Mini-Widget -->
+      <div class="today-classes-box" id="todayClassesBox">
+        <div class="today-classes-header">
+          <div style="font-size:12px; font-weight:700; color:var(--text-main); display:flex; align-items:center; gap:6px;">
+            <span>📅 Today's Schedule</span>
+            <span style="font-size:11px; font-weight:600; color:var(--text-muted);" id="todayDayNameLabel">Monday</span>
+          </div>
+          <span style="font-size:11px; font-weight:700; color:var(--status-good-text); font-family:var(--font-mono);" id="todayCapacityLabel">6 Units Counted</span>
+        </div>
+        <div class="today-periods-grid" id="todayPeriodsGrid">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+    </div>
+
     <!-- HERO ATTENDANCE SCORECARD -->
     <div class="hero-metric-card">
       <div class="hero-top-flex">
@@ -1810,6 +2363,129 @@ body {
 
     <div class="subject-grid" id="subjectGridList">
       <!-- Injected via JavaScript -->
+    </div>
+  </main>
+
+  <!-- TIMETABLE & SCHEDULE PANEL -->
+  <main class="tab-panel" id="panelTimetable">
+    <div class="timetable-hero-card">
+      <div class="timetable-top-flex">
+        <div>
+          <div style="font-size:11px; text-transform:uppercase; color:var(--text-muted); font-weight:700; letter-spacing:0.5px;">MCA 1st Semester · Official Timetable (Ver-3)</div>
+          <h2 style="font-size:20px; font-weight:800; margin:4px 0 2px; color:var(--text-main);" id="timetableSectionTitle">Section B Schedule</h2>
+          <div style="font-size:12px; color:var(--text-muted);">w.e.f. 12 October 2026 · Bharati Vidyapeeth Institute (BVICAM)</div>
+        </div>
+        <div class="timetable-section-toggle">
+          <button class="section-pill-btn" id="ttSecBtn1" onclick="switchTimetableSection('1')">Section A</button>
+          <button class="section-pill-btn active" id="ttSecBtn2" onclick="switchTimetableSection('2')">Section B</button>
+        </div>
+      </div>
+
+      <div class="sprint-countdown-pill">
+        <span style="font-size:16px;">⏳</span>
+        <span><strong>Cutoff: Thursday, Nov 5, 2026</strong> · Only <strong>4 days</strong> (Mon–Thu: 24 counted classes) remain before semester classes officially conclude.</span>
+      </div>
+
+      <div class="day-selector-bar" id="ttDaySelectorBar">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+
+    <div id="timetablePeriodsContainer">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <div class="timetable-notes-card">
+      <div style="font-weight:700; font-size:12px; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;">Attendance & Credit Rules</div>
+      <div class="timetable-rules-grid">
+        <div class="tt-rule-item">
+          <strong>🔬 2-Hour Practical Labs = 2 Units:</strong> Each scheduled 2-hour lab slot (2:00–4:00 PM or Friday blocks) carries 2 counted attendance units.
+        </div>
+        <div class="tt-rule-item">
+          <strong>👔 Corporate Grooming = 2 Units:</strong> Saturday 11:15–1:15 PM Corporate Grooming (PP-1) counts towards official institutional attendance.
+        </div>
+        <div class="tt-rule-item">
+          <strong>📖 Theory = 1 Unit / Hour:</strong> Daily 1-hour theory lectures each carry 1 attendance unit.
+        </div>
+        <div class="tt-rule-item">
+          <strong>🚫 Tutorials (4:00–5:00 PM) = Non-counted:</strong> Remedial tutorials are extra support and excluded from counted attendance.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- WHAT-IF SIMULATOR PANEL -->
+  <main class="tab-panel" id="panelSim">
+    <div class="sim-hero-card">
+      <div style="font-size:11px; text-transform:uppercase; color:var(--text-muted); font-weight:700; letter-spacing:0.5px;">Interactive Attendance Simulator</div>
+      <h2 style="font-size:22px; font-weight:800; margin:4px 0 6px; color:var(--text-main);">Final Sprint "What-If" Calculator</h2>
+      <p style="font-size:13px; color:var(--text-muted); margin:0 0 16px;">
+        Simulate how attending or missing classes in the remaining 4 days (Nov 2 – Nov 5: <strong>24 classes total</strong>) affects your final percentage on November 5.
+      </p>
+
+      <div class="sim-presets-row">
+        <button class="sim-preset-btn" onclick="applySimPreset('all')">Attend All 24 (100% Sprint)</button>
+        <button class="sim-preset-btn" id="simPresetThresholdBtn" onclick="applySimPreset('threshold')">Exact 75% Target</button>
+        <button class="sim-preset-btn" onclick="applySimPreset('theory')">Attend Theory Only (Skip Labs)</button>
+        <button class="sim-preset-btn" onclick="applySimPreset('none')">Skip All (Worst Case)</button>
+      </div>
+
+      <div class="sim-slider-container">
+        <div class="sim-slider-header">
+          <span>Remaining Classes to Attend:</span>
+          <span class="sim-slider-val-badge tabular-nums" id="simSliderValDisplay">11 / 24 classes</span>
+        </div>
+        <input type="range" class="sim-range-slider" id="simRangeInput" min="0" max="24" value="11" oninput="handleSimSliderChange(this.value)">
+        <div class="sim-slider-ticks">
+          <span>0 (Skip All)</span>
+          <span>6 (1 Day)</span>
+          <span>12 (2 Days)</span>
+          <span>18 (3 Days)</span>
+          <span>24 (All 4 Days)</span>
+        </div>
+      </div>
+
+      <div class="sim-results-grid">
+        <div class="sim-result-box">
+          <div class="sim-res-label">Projected Final %</div>
+          <div class="sim-res-val tabular-nums" id="simProjPct">77.74%</div>
+          <div class="sim-res-delta tabular-nums" id="simDeltaVal">+0.00% vs current</div>
+        </div>
+        <div class="sim-result-box">
+          <div class="sim-res-label">Final Attendance Ratio</div>
+          <div class="sim-res-val tabular-nums" id="simProjRatio">231 / 307</div>
+          <div class="sim-res-sub">Projected Held: 307 classes</div>
+        </div>
+        <div class="sim-result-box full-width">
+          <div class="sim-res-label">Regulatory Status on Nov 5</div>
+          <div class="sim-status-banner" id="simStatusBanner">
+            <span class="sim-status-icon" id="simStatusIcon">✅</span>
+            <span id="simStatusText">Eligible for Semester Examinations (≥ 75.00%)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-meta-header" style="margin-top:20px;">
+      <h2 class="section-heading-text">Subject-Wise Projected Impact</h2>
+      <span style="font-size:12px; color:var(--text-muted);">How remaining sprint classes distribute across subjects</span>
+    </div>
+    <div class="leaderboard-table-wrap">
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th style="text-align:right;">Current</th>
+            <th style="text-align:right;">Remaining</th>
+            <th style="text-align:right;">Simulated Attended</th>
+            <th style="text-align:right;">Projected %</th>
+            <th style="text-align:right;">Status</th>
+          </tr>
+        </thead>
+        <tbody id="simSubjectTableBody">
+          <!-- Injected via JavaScript -->
+        </tbody>
+      </table>
     </div>
   </main>
 
@@ -1898,10 +2574,13 @@ body {
       <div class="rank-search-box">
         <input type="text" class="rank-search-input" id="rankSearchInput" placeholder="Filter ranked students by name or roll..." oninput="handleRankSearch(this.value)">
       </div>
-      <div class="section-filter-group">
-        <button class="section-filter-btn active" id="secBtnAll" onclick="setRankSectionFilter('all')">All Sec</button>
+      <div class="section-filter-group" style="display:flex; flex-wrap:wrap; gap:4px;">
+        <button class="section-filter-btn active" id="secBtnAll" onclick="setRankSectionFilter('all')">All</button>
         <button class="section-filter-btn" id="secBtn1" onclick="setRankSectionFilter('1')">Sec 1</button>
         <button class="section-filter-btn" id="secBtn2" onclick="setRankSectionFilter('2')">Sec 2</button>
+        <button class="section-filter-btn" id="secBtnSafe" onclick="setRankSectionFilter('safe')">🛡️ Safe (≥75%)</button>
+        <button class="section-filter-btn" id="secBtnDanger" onclick="setRankSectionFilter('danger')">⚡ At Risk</button>
+        <button class="section-filter-btn" id="secBtnCapped" onclick="setRankSectionFilter('impossible')">🚨 Capped (<75%)</button>
       </div>
       <div style="font-size:12px; font-family:var(--font-mono); color:var(--text-muted);" id="rankCountLabel">
         <!-- Injected -->
@@ -2081,76 +2760,196 @@ function getMyRecord() {
 }
 
 // ==========================================================================
-// SCHEDULE RECOVERY CALCULATION (Mon-Fri 6, Sat 4, Sun 0)
+// TIMETABLE & FINAL SPRINT RECOVERY ENGINE (Official w.e.f. 12 Oct 2026 Ver-3)
+// Cutoff: Thursday, November 5, 2026 · 24 Counted Classes Remaining
 // ==========================================================================
-function computeScheduleRecovery(held, attended, target) {
+const SEMESTER_END_DATE_STR = '2026-11-05';
+
+const FACULTY_INFO = {
+  'DS': { name: 'Discrete Structures', code: 'MCA-101', prof: 'Prof. Parul Arora', initials: 'PA' },
+  'CN': { name: 'Computer Networks', code: 'MCA-103', prof: 'Dr. Arpita Nagpal', initials: 'AN' },
+  'OSL': { name: 'Operating Systems with Linux', code: 'MCA-105', prof: 'Prof. Sunil Pratap Singh', initials: 'SPS' },
+  'DBMS': { name: 'Database Management Systems', code: 'MCA-107', prof: 'Dr. Rakee Sharma / Dr. Sania Kukkar', initials: 'RS/SK' },
+  'JAVA': { name: 'Object Oriented Programming & Java', code: 'MCA-109', prof: 'Prof. Ritika Wason', initials: 'RW' },
+  'PP1': { name: 'Corporate Grooming', code: 'MCA-171', prof: 'Faculty Team', initials: 'BVIMR' }
+};
+
+const SECTION_TIMETABLES = {
+  '1': {
+    sectionName: 'Section A (MCA-A)',
+    schedule: {
+      'Mon': [
+        { time: '09:00 - 10:00', subject: 'JAVA', type: 'Theory', units: 1, prof: 'Prof. Ritika Wason (RW)', room: 'Seminar Hall', key: 'java' },
+        { time: '10:00 - 11:00', subject: 'JAVA', type: 'Theory', units: 1, prof: 'Prof. Ritika Wason (RW)', room: 'Seminar Hall', key: 'java' },
+        { time: '11:15 - 12:15', subject: 'DS', type: 'Theory', units: 1, prof: 'Prof. Parul Arora (PA)', room: 'Seminar Hall', key: 'ds' },
+        { time: '12:15 - 01:15', subject: 'DS', type: 'Theory', units: 1, prof: 'Prof. Parul Arora (PA)', room: 'Seminar Hall', key: 'ds' },
+        { time: '02:00 - 04:00', subject: 'OS Lab', type: '2-Hr Lab', units: 2, prof: 'Prof. Sunil Pratap Singh (SPS)', room: 'Computer Center', key: 'osl' }
+      ],
+      'Tue': [
+        { time: '09:00 - 10:00', subject: 'JAVA', type: 'Theory', units: 1, prof: 'Prof. Ritika Wason (RW)', room: 'Seminar Hall', key: 'java' },
+        { time: '10:00 - 11:00', subject: 'DBMS', type: 'Theory', units: 1, prof: 'Dr. Rakee Sharma (RS)', room: 'Seminar Hall', key: 'dbms' },
+        { time: '11:15 - 12:15', subject: 'CN', type: 'Theory', units: 1, prof: 'Dr. Arpita Nagpal (AN)', room: 'Seminar Hall', key: 'cn' },
+        { time: '12:15 - 01:15', subject: 'DS', type: 'Theory', units: 1, prof: 'Prof. Parul Arora (PA)', room: 'Seminar Hall', key: 'ds' },
+        { time: '02:00 - 04:00', subject: 'DBMS Lab', type: '2-Hr Lab', units: 2, prof: 'Dr. Sania Kukkar (SK)', room: 'Computer Center', key: 'dbms' }
+      ],
+      'Wed': [
+        { time: '09:00 - 11:00', subject: 'CN', type: 'Theory (2 Hrs)', units: 2, prof: 'Dr. Arpita Nagpal (AN)', room: 'Seminar Hall', key: 'cn' },
+        { time: '11:15 - 01:15', subject: 'DBMS', type: 'Theory (2 Hrs)', units: 2, prof: 'Dr. Rakee Sharma (RS)', room: 'Seminar Hall', key: 'dbms' },
+        { time: '02:00 - 04:00', subject: 'CN Lab', type: '2-Hr Lab', units: 2, prof: 'Dr. Arpita Nagpal (AN)', room: 'Computer Center', key: 'cn' }
+      ],
+      'Thu': [
+        { time: '09:00 - 10:00', subject: 'OS', type: 'Theory', units: 1, prof: 'Prof. Sunil Pratap Singh (SPS)', room: 'Seminar Hall', key: 'osl' },
+        { time: '10:00 - 11:00', subject: 'JAVA', type: 'Theory', units: 1, prof: 'Prof. Ritika Wason (RW)', room: 'Seminar Hall', key: 'java' },
+        { time: '11:15 - 01:15', subject: 'DS', type: 'Theory (2 Hrs)', units: 2, prof: 'Prof. Parul Arora (PA)', room: 'Seminar Hall', key: 'ds' },
+        { time: '02:00 - 04:00', subject: 'OS Lab', type: '2-Hr Lab', units: 2, prof: 'Prof. Sunil Pratap Singh (SPS)', room: 'Computer Center', key: 'osl' }
+      ],
+      'Fri': [
+        { time: '09:00 - 11:00', subject: 'CN Lab', type: '2-Hr Lab', units: 2, prof: 'Dr. Arpita Nagpal (AN)', room: 'Computer Center', key: 'cn' },
+        { time: '11:15 - 01:15', subject: 'DS', type: 'Theory (2 Hrs)', units: 2, prof: 'Prof. Parul Arora (PA)', room: 'Seminar Hall', key: 'ds' },
+        { time: '02:00 - 04:00', subject: 'JAVA Lab', type: '2-Hr Lab', units: 2, prof: 'Prof. Ritika Wason (RW)', room: 'Computer Center', key: 'java' }
+      ],
+      'Sat': [
+        { time: '09:00 - 10:00', subject: 'CN', type: 'Theory', units: 1, prof: 'Dr. Arpita Nagpal (AN)', room: 'Seminar Hall', key: 'cn' },
+        { time: '10:00 - 11:00', subject: 'DBMS', type: 'Theory', units: 1, prof: 'Dr. Rakee Sharma (RS)', room: 'Seminar Hall', key: 'dbms' },
+        { time: '11:15 - 01:15', subject: 'Corporate Grooming', type: 'Counted Activity (2 Hrs)', units: 2, prof: 'Faculty Team', room: 'Seminar Hall', key: 'pp1' }
+      ]
+    }
+  },
+  '2': {
+    sectionName: 'Section B (MCA-B)',
+    schedule: {
+      'Mon': [
+        { time: '09:00 - 10:00', subject: 'JAVA', type: 'Theory', units: 1, prof: 'Prof. Ritika Wason (RW)', room: 'Seminar Hall', key: 'java' },
+        { time: '10:00 - 11:00', subject: 'JAVA', type: 'Theory', units: 1, prof: 'Prof. Ritika Wason (RW)', room: 'Seminar Hall', key: 'java' },
+        { time: '11:15 - 12:15', subject: 'DS', type: 'Theory', units: 1, prof: 'Prof. Parul Arora (PA)', room: 'Seminar Hall', key: 'ds' },
+        { time: '12:15 - 01:15', subject: 'DS', type: 'Theory', units: 1, prof: 'Prof. Parul Arora (PA)', room: 'Seminar Hall', key: 'ds' },
+        { time: '02:00 - 04:00', subject: 'CN Lab', type: '2-Hr Lab', units: 2, prof: 'Dr. Arpita Nagpal (AN)', room: 'Learning Resource Center', key: 'cn' }
+      ],
+      'Tue': [
+        { time: '09:00 - 10:00', subject: 'JAVA', type: 'Theory', units: 1, prof: 'Prof. Ritika Wason (RW)', room: 'Seminar Hall', key: 'java' },
+        { time: '10:00 - 11:00', subject: 'DBMS', type: 'Theory', units: 1, prof: 'Dr. Rakee Sharma (RS)', room: 'Seminar Hall', key: 'dbms' },
+        { time: '11:15 - 12:15', subject: 'CN', type: 'Theory', units: 1, prof: 'Dr. Arpita Nagpal (AN)', room: 'Seminar Hall', key: 'cn' },
+        { time: '12:15 - 01:15', subject: 'DS', type: 'Theory', units: 1, prof: 'Prof. Parul Arora (PA)', room: 'Seminar Hall', key: 'ds' },
+        { time: '02:00 - 04:00', subject: 'JAVA Lab', type: '2-Hr Lab', units: 2, prof: 'Prof. Ritika Wason (RW)', room: 'Learning Resource Center', key: 'java' }
+      ],
+      'Wed': [
+        { time: '09:00 - 11:00', subject: 'CN', type: 'Theory (2 Hrs)', units: 2, prof: 'Dr. Arpita Nagpal (AN)', room: 'Seminar Hall', key: 'cn' },
+        { time: '11:15 - 01:15', subject: 'DBMS', type: 'Theory (2 Hrs)', units: 2, prof: 'Dr. Rakee Sharma (RS)', room: 'Seminar Hall', key: 'dbms' },
+        { time: '02:00 - 04:00', subject: 'OS Lab', type: '2-Hr Lab', units: 2, prof: 'Prof. Sunil Pratap Singh (SPS)', room: 'Learning Resource Center', key: 'osl' }
+      ],
+      'Thu': [
+        { time: '09:00 - 10:00', subject: 'OS', type: 'Theory', units: 1, prof: 'Prof. Sunil Pratap Singh (SPS)', room: 'Seminar Hall', key: 'osl' },
+        { time: '10:00 - 11:00', subject: 'JAVA', type: 'Theory', units: 1, prof: 'Prof. Ritika Wason (RW)', room: 'Seminar Hall', key: 'java' },
+        { time: '11:15 - 01:15', subject: 'DS', type: 'Theory (2 Hrs)', units: 2, prof: 'Prof. Parul Arora (PA)', room: 'Seminar Hall', key: 'ds' },
+        { time: '02:00 - 04:00', subject: 'CN Lab', type: '2-Hr Lab', units: 2, prof: 'Dr. Arpita Nagpal (AN)', room: 'Learning Resource Center', key: 'cn' }
+      ],
+      'Fri': [
+        { time: '09:00 - 11:00', subject: 'OS Lab', type: '2-Hr Lab', units: 2, prof: 'Prof. Sunil Pratap Singh (SPS)', room: 'Learning Resource Center', key: 'osl' },
+        { time: '11:15 - 01:15', subject: 'DS', type: 'Theory (2 Hrs)', units: 2, prof: 'Prof. Parul Arora (PA)', room: 'Seminar Hall', key: 'ds' },
+        { time: '02:00 - 04:00', subject: 'DBMS Lab', type: '2-Hr Lab', units: 2, prof: 'Dr. Sania Kukkar (SK)', room: 'Learning Resource Center', key: 'dbms' }
+      ],
+      'Sat': [
+        { time: '09:00 - 10:00', subject: 'CN', type: 'Theory', units: 1, prof: 'Dr. Arpita Nagpal (AN)', room: 'Seminar Hall', key: 'cn' },
+        { time: '10:00 - 11:00', subject: 'DBMS', type: 'Theory', units: 1, prof: 'Dr. Rakee Sharma (RS)', room: 'Seminar Hall', key: 'dbms' },
+        { time: '11:15 - 01:15', subject: 'Corporate Grooming', type: 'Counted Activity (2 Hrs)', units: 2, prof: 'Faculty Team', room: 'Seminar Hall', key: 'pp1' }
+      ]
+    }
+  }
+};
+
+function getSprintBreakdown(sec) {
+  const sKey = (sec === '1' || sec === 1 || sec === 'A') ? '1' : '2';
+  const sprintDays = ['Mon', 'Tue', 'Wed', 'Thu'];
+  const tt = SECTION_TIMETABLES[sKey].schedule;
+  
+  let totalUnits = 0;
+  const subjectUnits = { ds: 0, cn: 0, osl: 0, dbms: 0, java: 0, pp1: 0 };
+  const dailyPlans = [];
+
+  sprintDays.forEach(day => {
+    const periods = tt[day] || [];
+    let dayUnits = 0;
+    periods.forEach(p => {
+      dayUnits += p.units;
+      if (subjectUnits[p.key] !== undefined) subjectUnits[p.key] += p.units;
+    });
+    totalUnits += dayUnits;
+    dailyPlans.push({ day, dayUnits, periods });
+  });
+
+  return { totalUnits, subjectUnits, dailyPlans, sectionName: SECTION_TIMETABLES[sKey].sectionName };
+}
+
+function computeScheduleRecovery(held, attended, target, sec, subjectKey) {
   const currentPct = held > 0 ? (attended / held * 100) : 0;
   const targetRatio = target / 100;
+  
+  const sprint = getSprintBreakdown(sec || MY_SECTION);
+  let remClasses = sprint.totalUnits; // 24 classes across Mon-Thu
+  if (subjectKey && sprint.subjectUnits[subjectKey] !== undefined) {
+    remClasses = sprint.subjectUnits[subjectKey];
+  }
 
-  if (currentPct >= target) {
-    const canMiss = Math.floor(attended / targetRatio - held);
+  const finalHeld = held + remClasses;
+  const finalNeeded = Math.ceil(targetRatio * finalHeld);
+  const neededFromSprint = Math.max(0, finalNeeded - attended);
+  const maxAchievablePct = finalHeld > 0 ? ((attended + remClasses) / finalHeld * 100) : 0;
+  const worstCasePct = finalHeld > 0 ? (attended / finalHeld * 100) : 0;
+  const canMiss = remClasses - neededFromSprint;
+
+  if (neededFromSprint > remClasses) {
+    const shortfall = neededFromSprint - remClasses;
+    return {
+      status: 'impossible',
+      currentPct,
+      remClasses,
+      finalHeld,
+      needed: neededFromSprint,
+      canMiss: 0,
+      daysBuffer: '0.0',
+      maxAchievablePct,
+      worstCasePct,
+      shortfall,
+      headline: `Threshold Capped: Mathematically impossible to reach ${target}% before Nov 5 cutoff.`,
+      subnote: `Even with 100% attendance in all ${remClasses} remaining sprint classes, maximum achievable is ${maxAchievablePct.toFixed(2)}% (short by ${shortfall} class${shortfall > 1 ? 'es' : ''}). Immediate medical / condonation request required.`,
+      recoveryNote: `Shortfall of ${shortfall} classes beyond Nov 5 cutoff.`
+    };
+  } else if (currentPct >= target) {
     const daysBuffer = (canMiss / 6.0).toFixed(1);
     return {
       status: 'safe',
-      currentPct: currentPct,
-      canMiss: canMiss,
-      daysBuffer: daysBuffer,
-      headline: canMiss === 0
-        ? 'At exact threshold. Cannot miss any upcoming classes.'
-        : `Runway buffer: Can miss ${canMiss} class${canMiss > 1 ? 'es' : ''} (~${daysBuffer} days buffer at 6/day).`
+      currentPct,
+      remClasses,
+      finalHeld,
+      needed: neededFromSprint,
+      canMiss: Math.max(0, canMiss),
+      daysBuffer,
+      maxAchievablePct,
+      worstCasePct,
+      headline: canMiss >= remClasses
+        ? `Fully Guaranteed Safe: Even if you miss all ${remClasses} remaining classes, you finish at ${worstCasePct.toFixed(2)}% (≥ ${target}%).`
+        : `Runway Buffer: Safe. Can afford to skip up to ${canMiss} of ${remClasses} remaining classes and still finish ≥ ${target}%.`,
+      subnote: `Need to attend at least ${neededFromSprint} of ${remClasses} sprint classes. Maximum achievable with 100% sprint: ${maxAchievablePct.toFixed(2)}%.`,
+      recoveryNote: `Safe with ${canMiss} class skips buffer (~${daysBuffer} days).`
+    };
+  } else {
+    // Current is below target but mathematically recoverable!
+    const daysBuffer = (canMiss / 6.0).toFixed(1);
+    return {
+      status: 'danger',
+      currentPct,
+      remClasses,
+      finalHeld,
+      needed: neededFromSprint,
+      canMiss: Math.max(0, canMiss),
+      daysBuffer,
+      maxAchievablePct,
+      worstCasePct,
+      headline: `High Stakes: Must attend at least ${neededFromSprint} of ${remClasses} remaining sprint classes to reach ${target}%.`,
+      subnote: `Bunk runway allowance: Can skip at most ${canMiss} class${canMiss === 1 ? '' : 'es'}. 100% sprint attendance reaches ${maxAchievablePct.toFixed(2)}%.`,
+      recoveryNote: `Must attend ${neededFromSprint} of ${remClasses} remaining classes.`
     };
   }
-
-  // Deficit calculation
-  const needed = Math.ceil((targetRatio * held - attended) / (1 - targetRatio));
-  
-  // Simulate day by day starting from today
-  let curr = new Date();
-  let remaining = needed;
-  let collegeDays = 0;
-  let targetDate = null;
-  const scheduleProjection = [];
-
-  for (let i = 0; i < 300 && remaining > 0; i++) {
-    curr.setDate(curr.getDate() + 1);
-    const dayOfWeek = curr.getDay(); // 0 = Sun, 1 = Mon ... 6 = Sat
-    if (dayOfWeek === 0) continue; // Sunday off
-
-    const dayCapacity = (dayOfWeek === 6) ? 4 : 6;
-    const attendedToday = Math.min(remaining, dayCapacity);
-    remaining -= attendedToday;
-    collegeDays++;
-
-    if (collegeDays <= 5) {
-      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      scheduleProjection.push({
-        dayName: dayNames[dayOfWeek],
-        dateStr: curr.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }),
-        capacity: dayCapacity,
-        covered: attendedToday
-      });
-    }
-
-    if (remaining <= 0) {
-      targetDate = new Date(curr);
-      break;
-    }
-  }
-
-  const weeks = (collegeDays / 6.0).toFixed(1);
-  const targetDateStr = targetDate ? targetDate.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }) : 'N/A';
-
-  return {
-    status: 'behind',
-    currentPct: currentPct,
-    needed: needed,
-    collegeDays: collegeDays,
-    weeks: weeks,
-    targetDateStr: targetDateStr,
-    scheduleProjection: scheduleProjection,
-    headline: `Deficit: Must attend next ${needed} classes in a row (~${collegeDays} college days / ${weeks} weeks).`,
-    recoveryNote: `Based on 6 classes/day (Mon–Fri) & 4 on Sat (34/week), target will be restored by ${targetDateStr}.`
-  };
 }
 
 // ==========================================================================
@@ -2160,7 +2959,11 @@ function renderAttendanceTab() {
   const me = getMyRecord();
   const effectivePct = (me.overallPct && me.overallPct > 0) ? me.overallPct : me.totalPct;
   const pct = me.totalPct;
-  const status = effectivePct >= targetPct ? 'safe' : (effectivePct >= targetPct - 5 ? 'close' : 'below');
+  const effectiveAttended = me.totalAttended + (me.dlRem || 0);
+
+  // Overall Recovery Calculation with Section & Cutoff
+  const overallRecovery = computeScheduleRecovery(me.totalHeld, effectiveAttended, targetPct, me.section);
+  const status = overallRecovery.status; // 'safe', 'danger', or 'impossible'
 
   // Hero Card
   document.getElementById('heroAttPct').textContent = effectivePct.toFixed(2) + '%';
@@ -2171,52 +2974,114 @@ function renderAttendanceTab() {
   document.getElementById('heroAttRatio').textContent = ratioStr;
 
   const statusBadge = document.getElementById('heroStatusBadge');
-  statusBadge.className = `status-badge ${status}`;
+  statusBadge.className = `status-badge ${status === 'safe' ? 'safe' : (status === 'danger' ? 'close' : 'below')}`;
   if (status === 'safe') {
     statusBadge.textContent = `Safe (+${(effectivePct - targetPct).toFixed(2)}% margin)`;
-  } else if (status === 'close') {
-    statusBadge.textContent = `Caution (${(targetPct - effectivePct).toFixed(2)}% below target)`;
+  } else if (status === 'danger') {
+    statusBadge.textContent = `At Risk (${(targetPct - effectivePct).toFixed(2)}% below target)`;
   } else {
-    statusBadge.textContent = `Deficit (${(targetPct - effectivePct).toFixed(2)}% below target)`;
+    statusBadge.textContent = `Ineligible (Capped at ${overallRecovery.maxAchievablePct.toFixed(1)}%)`;
   }
 
   const progressFill = document.getElementById('heroProgressFill');
   progressFill.style.width = Math.min(effectivePct, 100) + '%';
-  progressFill.className = `progress-fill ${status}`;
+  progressFill.className = `progress-fill ${status === 'safe' ? 'safe' : (status === 'danger' ? 'close' : 'below')}`;
 
   const needle = document.getElementById('heroTargetNeedle');
   needle.style.left = targetPct + '%';
   needle.setAttribute('data-label', `${targetPct}% TARGET`);
 
-  // Overall Recovery Calculation
-  const overallRecovery = computeScheduleRecovery(me.totalHeld, me.totalAttended, targetPct);
   const runwaySummary = document.getElementById('heroRunwaySummary');
-
   if (overallRecovery.status === 'safe') {
-    runwaySummary.textContent = overallRecovery.canMiss === 0
-      ? 'Zero margin: cannot miss any upcoming class.'
-      : `Runway: Can miss ${overallRecovery.canMiss} classes (~${overallRecovery.daysBuffer} days buffer at 6/day)`;
+    runwaySummary.textContent = overallRecovery.canMiss >= overallRecovery.remClasses
+      ? '100% Guaranteed Safe: Can skip all remaining sprint classes.'
+      : `Runway Buffer: Can skip ${overallRecovery.canMiss} of ${overallRecovery.remClasses} remaining classes.`;
     runwaySummary.style.color = 'var(--status-good-text)';
+  } else if (overallRecovery.status === 'danger') {
+    runwaySummary.textContent = `High Stakes: Must attend at least ${overallRecovery.needed} of ${overallRecovery.remClasses} classes.`;
+    runwaySummary.style.color = 'var(--status-warn-text)';
   } else {
-    runwaySummary.textContent = `Need ${overallRecovery.needed} consecutive classes (~${overallRecovery.collegeDays} college days)`;
+    runwaySummary.textContent = `Capped: Cannot reach ${targetPct}% before Nov 5 (Max: ${overallRecovery.maxAchievablePct.toFixed(1)}%).`;
     runwaySummary.style.color = 'var(--status-bad-text)';
+  }
+
+  // Populate Sprint Countdown Banner
+  const sprintSummaryEl = document.getElementById('sprintStatusBannerSummary');
+  if (sprintSummaryEl) {
+    if (overallRecovery.status === 'safe') {
+      sprintSummaryEl.innerHTML = `
+        <div style="color:var(--status-good-text);">
+          <strong>${overallRecovery.headline}</strong>
+        </div>
+        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
+          ${overallRecovery.subnote}
+        </div>
+      `;
+    } else if (overallRecovery.status === 'danger') {
+      sprintSummaryEl.innerHTML = `
+        <div style="color:var(--status-warn-text);">
+          <strong>${overallRecovery.headline}</strong>
+        </div>
+        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
+          ${overallRecovery.subnote}
+        </div>
+      `;
+    } else {
+      sprintSummaryEl.innerHTML = `
+        <div style="color:var(--status-bad-text);">
+          <strong>${overallRecovery.headline}</strong>
+        </div>
+        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
+          ${overallRecovery.subnote}
+        </div>
+      `;
+    }
+  }
+
+  // Populate Today's Classes Mini-Widget
+  const todayIdx = new Date().getDay();
+  const dayMap = ['Mon', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const todayDay = dayMap[todayIdx] || 'Mon';
+  
+  const todayDayLabel = document.getElementById('todayDayNameLabel');
+  if (todayDayLabel) todayDayLabel.textContent = `Today: ${todayDay} (Section ${me.section})`;
+
+  const ttKey = (me.section === '1' || me.section === 1 || me.section === 'A') ? '1' : '2';
+  const todayPeriods = (SECTION_TIMETABLES[ttKey] && SECTION_TIMETABLES[ttKey].schedule[todayDay]) || [];
+
+  const todayGrid = document.getElementById('todayPeriodsGrid');
+  if (todayGrid) {
+    if (todayPeriods.length === 0) {
+      todayGrid.innerHTML = `<div style="font-size:12px; color:var(--text-muted); padding:10px;">No scheduled classes for today.</div>`;
+    } else {
+      todayGrid.innerHTML = todayPeriods.map(p => `
+        <div class="today-period-pill">
+          <div class="today-period-time">${p.time} · ${p.units} Unit${p.units > 1 ? 's' : ''}</div>
+          <div class="today-period-title">${p.subject}</div>
+          <div class="today-period-meta">
+            <span>${p.room}</span>
+            <span style="font-weight:700; color:var(--accent-blue);">${p.type}</span>
+          </div>
+        </div>
+      `).join('');
+    }
   }
 
   // Render Schedule Recovery Engine Banner
   const banner = document.getElementById('scheduleRecoveryBanner');
   banner.className = `recovery-banner ${overallRecovery.status === 'safe' ? 'safe-mode' : 'behind-mode'}`;
 
-  // Check which individual subjects are behind target
   const subjectList = Object.keys(me.subjects).map(k => me.subjects[k]).filter(s => !s.isOneOff);
   const behindSubjects = subjectList.filter(s => s.pct < targetPct);
+  const sprint = getSprintBreakdown(me.section);
 
   let bannerHtml = `
     <div class="recovery-top-row">
       <div class="recovery-title">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-        Attendance Recovery Engine (6 Classes Mon–Fri · 4 on Sat)
+        Semester Sprint Recovery Engine (Nov 2 – Nov 5 Cutoff · 24 Remaining Classes)
       </div>
-      <span class="recovery-model-badge">Weekly Capacity: 34 Classes</span>
+      <span class="recovery-model-badge">Section ${me.section} · ${sprint.sectionName}</span>
     </div>
   `;
 
@@ -2227,14 +3092,45 @@ function renderAttendanceTab() {
       </div>
       <div class="recovery-metrics-grid">
         <div class="recovery-metric-cell">
-          <div class="label">Aggregate Runway</div>
-          <div class="value">${overallRecovery.canMiss} <span style="font-size:13px; font-weight:500; color:var(--text-muted)">classes</span></div>
-          <div class="sub">~${overallRecovery.daysBuffer} college days buffer</div>
+          <div class="label">Bunk Runway Buffer</div>
+          <div class="value">${overallRecovery.canMiss} <span style="font-size:13px; font-weight:500; color:var(--text-muted)">of 24 classes</span></div>
+          <div class="sub">Can safely skip ~${overallRecovery.daysBuffer} days of classes</div>
         </div>
         <div class="recovery-metric-cell">
-          <div class="label">Deficit Subjects</div>
-          <div class="value" style="color:${behindSubjects.length > 0 ? 'var(--status-bad-text)' : 'var(--status-good-text)'}">${behindSubjects.length} <span style="font-size:13px; font-weight:500; color:var(--text-muted)">of ${subjectList.length}</span></div>
-          <div class="sub">${behindSubjects.length > 0 ? behindSubjects.map(s => s.code).join(', ') + ' need recovery' : 'All subjects safe'}</div>
+          <div class="label">Sprint Classes Needed</div>
+          <div class="value">${overallRecovery.needed} <span style="font-size:13px; font-weight:500; color:var(--text-muted)">of 24</span></div>
+          <div class="sub">Attend ${overallRecovery.needed} classes to lock ${targetPct}%</div>
+        </div>
+        <div class="recovery-metric-cell">
+          <div class="label">Max Achievable %</div>
+          <div class="value tabular-nums" style="color:var(--status-good-text);">${overallRecovery.maxAchievablePct.toFixed(2)}%</div>
+          <div class="sub">With 100% attendance in all 24 classes</div>
+        </div>
+      </div>
+    `;
+  } else if (overallRecovery.status === 'danger') {
+    bannerHtml += `
+      <div style="font-size:13px; color:var(--status-warn-text); font-weight:600;">
+        ${overallRecovery.headline}
+      </div>
+      <div style="font-size:12px; color:var(--text-muted);">
+        ${overallRecovery.subnote}
+      </div>
+      <div class="recovery-metrics-grid">
+        <div class="recovery-metric-cell">
+          <div class="label">Classes to Attend</div>
+          <div class="value" style="color:var(--status-warn-text);">${overallRecovery.needed} <span style="font-size:13px; font-weight:500; color:var(--text-muted)">of 24</span></div>
+          <div class="sub">Must attend minimum ${overallRecovery.needed} classes</div>
+        </div>
+        <div class="recovery-metric-cell">
+          <div class="label">Skip Allowance</div>
+          <div class="value tabular-nums">${overallRecovery.canMiss} <span style="font-size:12px; color:var(--text-muted);">classes</span></div>
+          <div class="sub">Maximum bunk margin</div>
+        </div>
+        <div class="recovery-metric-cell">
+          <div class="label">Max Achievable %</div>
+          <div class="value tabular-nums" style="color:var(--status-good-text);">${overallRecovery.maxAchievablePct.toFixed(2)}%</div>
+          <div class="sub">With 100% sprint attendance</div>
         </div>
       </div>
     `;
@@ -2244,30 +3140,30 @@ function renderAttendanceTab() {
         ${overallRecovery.headline}
       </div>
       <div style="font-size:12px; color:var(--text-muted);">
-        ${overallRecovery.recoveryNote}
+        ${overallRecovery.subnote}
       </div>
       <div class="recovery-metrics-grid">
         <div class="recovery-metric-cell">
-          <div class="label">Classes to Attend</div>
-          <div class="value" style="color:var(--status-bad-text);">${overallRecovery.needed}</div>
-          <div class="sub">100% consecutive attendance</div>
+          <div class="label">Maximum Achievable</div>
+          <div class="value" style="color:var(--status-bad-text);">${overallRecovery.maxAchievablePct.toFixed(2)}%</div>
+          <div class="sub">With 100% attendance (24/24 classes)</div>
         </div>
         <div class="recovery-metric-cell">
-          <div class="label">College Days</div>
-          <div class="value tabular-nums">${overallRecovery.collegeDays} <span style="font-size:12px; color:var(--text-muted);">days</span></div>
-          <div class="sub">~${overallRecovery.weeks} academic weeks</div>
+          <div class="label">Deficit Shortfall</div>
+          <div class="value tabular-nums" style="color:var(--status-bad-text);">${overallRecovery.shortfall} <span style="font-size:12px; color:var(--text-muted);">classes</span></div>
+          <div class="sub">Beyond available semester hours</div>
         </div>
         <div class="recovery-metric-cell">
-          <div class="label">Target Date</div>
-          <div class="value" style="font-size:15px; font-weight:700;">${overallRecovery.targetDateStr}</div>
-          <div class="sub">Estimated threshold recovery</div>
+          <div class="label">Required Action</div>
+          <div class="value" style="font-size:14px; font-weight:700; color:var(--status-bad-text);">Dean Waiver</div>
+          <div class="sub">Submit Medical / DL exemption</div>
         </div>
       </div>
     `;
   }
   banner.innerHTML = bannerHtml;
 
-  // Render Subject List
+  // Render Subject List with Sprint Impact
   let subjects = [...subjectList];
   if (sortLowestFirst) {
     subjects.sort((a, b) => a.pct - b.pct);
@@ -2275,14 +3171,26 @@ function renderAttendanceTab() {
 
   const grid = document.getElementById('subjectGridList');
   grid.innerHTML = subjects.map(s => {
-    const subStatus = s.pct >= targetPct ? 'safe' : (s.pct >= targetPct - 5 ? 'close' : 'below');
-    const recovery = computeScheduleRecovery(s.held, s.att, targetPct);
+    // Map subject code to sprint key
+    let sKey = null;
+    if (s.code.includes('DS')) sKey = 'ds';
+    else if (s.code.includes('CN')) sKey = 'cn';
+    else if (s.code.includes('OSL')) sKey = 'osl';
+    else if (s.code.includes('DBMS')) sKey = 'dbms';
+    else if (s.code.includes('JAVA')) sKey = 'java';
+    else if (s.code.includes('PP-1')) sKey = 'pp1';
+
+    const recovery = computeScheduleRecovery(s.held, s.att, targetPct, me.section, sKey);
+    const subStatus = recovery.status === 'safe' ? 'safe' : (recovery.status === 'danger' ? 'close' : 'below');
+    const remSubUnits = sKey && sprint.subjectUnits[sKey] !== undefined ? sprint.subjectUnits[sKey] : 0;
     
     let impactText = '';
     if (recovery.status === 'safe') {
-      impactText = `<span class="subject-schedule-impact safe">Safe: ${recovery.canMiss} buffer (~${recovery.daysBuffer} days)</span>`;
+      impactText = `<span class="subject-schedule-impact safe">Safe · ${remSubUnits} classes left (Max: ${recovery.maxAchievablePct.toFixed(1)}%)</span>`;
+    } else if (recovery.status === 'danger') {
+      impactText = `<span class="subject-schedule-impact behind">Need ${recovery.needed} of ${remSubUnits} remaining classes</span>`;
     } else {
-      impactText = `<span class="subject-schedule-impact behind">Need ${recovery.needed} classes in a row (~${recovery.collegeDays} days / recovery by ${recovery.targetDateStr})</span>`;
+      impactText = `<span class="subject-schedule-impact behind" style="color:var(--status-bad-text);">Capped at ${recovery.maxAchievablePct.toFixed(1)}% (${remSubUnits} classes left)</span>`;
     }
 
     const labMeta = (s.labHeld > 0) ? ` · Theory ${s.theoryAtt}/${s.theoryHeld} · Lab ${s.labAtt}/${s.labHeld}` : '';
@@ -2310,6 +3218,256 @@ function renderAttendanceTab() {
     `;
   }).join('');
 }
+
+// ==========================================================================
+// TIMETABLE TAB RENDERER
+// ==========================================================================
+let currentTimetableSection = null;
+let currentTimetableDay = null;
+
+function renderTimetableTab() {
+  const me = getMyRecord();
+  if (!currentTimetableSection) {
+    currentTimetableSection = (me.section === '1' || me.section === 1 || me.section === 'A') ? '1' : '2';
+  }
+  
+  if (!currentTimetableDay) {
+    const dayIdx = new Date().getDay();
+    const map = ['Mon', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    currentTimetableDay = map[dayIdx] || 'Mon';
+  }
+
+  const secBtn1 = document.getElementById('ttSecBtn1');
+  const secBtn2 = document.getElementById('ttSecBtn2');
+  if (secBtn1) secBtn1.classList.toggle('active', currentTimetableSection === '1');
+  if (secBtn2) secBtn2.classList.toggle('active', currentTimetableSection === '2');
+
+  const title = document.getElementById('timetableSectionTitle');
+  if (title) {
+    title.textContent = currentTimetableSection === '1' ? 'Section A (MCA-A) Schedule' : 'Section B (MCA-B) Schedule';
+  }
+
+  const dayBar = document.getElementById('ttDaySelectorBar');
+  if (dayBar) {
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    dayBar.innerHTML = days.map(d => {
+      const isAct = d === currentTimetableDay;
+      const cutoffTag = (d === 'Thu') ? '<span class="cutoff-tag">Last</span>' : '';
+      return `<button class="day-tab-btn ${isAct ? 'active' : ''}" onclick="selectTimetableDay('${d}')">${d} ${cutoffTag}</button>`;
+    }).join('');
+  }
+
+  const ttData = SECTION_TIMETABLES[currentTimetableSection] || SECTION_TIMETABLES['2'];
+  const dayPeriods = ttData.schedule[currentTimetableDay] || [];
+  const container = document.getElementById('timetablePeriodsContainer');
+
+  if (container) {
+    if (dayPeriods.length === 0) {
+      container.innerHTML = `<div style="padding:30px; text-align:center; color:var(--text-muted);">No scheduled counted classes for this day.</div>`;
+      return;
+    }
+
+    let totalDayUnits = 0;
+    dayPeriods.forEach(p => totalDayUnits += p.units);
+
+    container.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <span style="font-size:13px; font-weight:700; color:var(--text-main);">${currentTimetableDay} Timetable (${dayPeriods.length} Sessions)</span>
+        <span style="font-size:12px; font-family:var(--font-mono); font-weight:700; color:var(--status-good-text);">${totalDayUnits} Counted Attendance Units</span>
+      </div>
+      <div class="timeline-periods-list">
+        ${dayPeriods.map(p => {
+          const isLab = p.type.includes('Lab');
+          const isGrooming = p.type.includes('Grooming');
+          const badgeCls = isLab ? 'lab' : (isGrooming ? 'grooming' : 'theory');
+          const itemCls = isLab ? 'is-lab' : (isGrooming ? 'is-grooming' : '');
+          const info = FACULTY_INFO[p.key.toUpperCase()] || {};
+          const fullSubName = info.name || p.subject;
+
+          return `
+            <div class="timeline-period-item ${itemCls}">
+              <div class="timeline-period-timebox">
+                <div class="timeline-time-str">${p.time}</div>
+                <div class="timeline-unit-badge">${p.units} Attendance Unit${p.units > 1 ? 's' : ''}</div>
+              </div>
+              <div class="timeline-period-infobox">
+                <div class="timeline-sub-title">
+                  <span>${p.subject}</span>
+                  <span class="timeline-sub-code">${fullSubName}</span>
+                </div>
+                <div class="timeline-sub-meta">
+                  <span>👤 Faculty: <strong>${p.prof}</strong></span>
+                  <span>📍 Room: <strong>${p.room}</strong></span>
+                </div>
+              </div>
+              <div>
+                <span class="timeline-badge-tag ${badgeCls}">${p.type}</span>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
+}
+
+function switchTimetableSection(sec) {
+  currentTimetableSection = sec;
+  renderTimetableTab();
+}
+
+function selectTimetableDay(day) {
+  currentTimetableDay = day;
+  renderTimetableTab();
+}
+
+// ==========================================================================
+// WHAT-IF SIMULATOR TAB RENDERER
+// ==========================================================================
+let simSimulatedAttended = 11;
+
+function renderSimulatorTab() {
+  const me = getMyRecord();
+  const effectivePct = (me.overallPct && me.overallPct > 0) ? me.overallPct : me.totalPct;
+  const currentAttended = me.totalAttended + (me.dlRem || 0);
+  const currentHeld = me.totalHeld;
+  const remClasses = 24;
+  const finalHeld = currentHeld + remClasses;
+
+  const finalNeeded75 = Math.ceil(0.75 * finalHeld);
+  const minSprintNeeded = Math.max(0, finalNeeded75 - currentAttended);
+
+  const thresholdBtn = document.getElementById('simPresetThresholdBtn');
+  if (thresholdBtn) {
+    if (minSprintNeeded > remClasses) {
+      thresholdBtn.textContent = '75% Unattainable (< Nov 5)';
+      thresholdBtn.disabled = true;
+    } else {
+      thresholdBtn.textContent = `Exact 75% Needed (${minSprintNeeded} Classes)`;
+      thresholdBtn.disabled = false;
+    }
+  }
+
+  const slider = document.getElementById('simRangeInput');
+  if (slider) {
+    slider.max = remClasses;
+    if (simSimulatedAttended === null || simSimulatedAttended > remClasses) {
+      simSimulatedAttended = Math.min(minSprintNeeded, remClasses);
+    }
+    slider.value = simSimulatedAttended;
+  }
+
+  const display = document.getElementById('simSliderValDisplay');
+  if (display) {
+    display.textContent = `${simSimulatedAttended} / ${remClasses} classes (${(simSimulatedAttended / remClasses * 100).toFixed(0)}%)`;
+  }
+
+  const projectedAttended = currentAttended + simSimulatedAttended;
+  const projectedPct = (projectedAttended / finalHeld) * 100;
+  const delta = projectedPct - effectivePct;
+
+  const projPctEl = document.getElementById('simProjPct');
+  if (projPctEl) {
+    projPctEl.textContent = projectedPct.toFixed(2) + '%';
+    projPctEl.style.color = projectedPct >= 75 ? 'var(--status-good-text)' : (projectedPct >= 70 ? 'var(--status-warn-text)' : 'var(--status-bad-text)');
+  }
+
+  const deltaEl = document.getElementById('simDeltaVal');
+  if (deltaEl) {
+    const sign = delta >= 0 ? '+' : '';
+    deltaEl.textContent = `${sign}${delta.toFixed(2)}% vs current`;
+    deltaEl.style.color = delta >= 0 ? 'var(--status-good-text)' : 'var(--status-bad-text)';
+  }
+
+  const projRatioEl = document.getElementById('simProjRatio');
+  if (projRatioEl) {
+    projRatioEl.textContent = `${projectedAttended} / ${finalHeld}`;
+  }
+
+  const statusBanner = document.getElementById('simStatusBanner');
+  const statusIcon = document.getElementById('simStatusIcon');
+  const statusText = document.getElementById('simStatusText');
+
+  if (statusBanner && statusText) {
+    if (projectedPct >= 75.0) {
+      statusBanner.className = 'sim-status-banner pass';
+      if (statusIcon) statusIcon.textContent = '✅';
+      statusText.textContent = `ELIGIBLE FOR SEMESTER EXAMS (Projected ${projectedPct.toFixed(2)}% · +${(projectedPct - 75).toFixed(2)}% above threshold)`;
+    } else if (projectedPct >= 70.0) {
+      statusBanner.className = 'sim-status-banner condonation';
+      if (statusIcon) statusIcon.textContent = '⚠️';
+      statusText.textContent = `CONDONATION REQUIRED (Projected ${projectedPct.toFixed(2)}% · Deficit: ${(75 - projectedPct).toFixed(2)}% · Requires Dean Medical/DL waiver)`;
+    } else {
+      statusBanner.className = 'sim-status-banner detained';
+      if (statusIcon) statusIcon.textContent = '❌';
+      statusText.textContent = `CRITICAL SHORTAGE / DETAINED (Projected ${projectedPct.toFixed(2)}% · ${(75 - projectedPct).toFixed(2)}% below 75% regulatory requirement)`;
+    }
+  }
+
+  const tbody = document.getElementById('simSubjectTableBody');
+  if (tbody) {
+    const sprint = getSprintBreakdown(me.section);
+    const subKeys = ['ds', 'cn', 'osl', 'dbms', 'java'];
+    const simFraction = simSimulatedAttended / remClasses;
+
+    tbody.innerHTML = subKeys.map(k => {
+      const sub = me.subjects[k];
+      if (!sub) return '';
+      const remSub = sprint.subjectUnits[k] || 0;
+      const simSubAtt = Math.round(remSub * simFraction);
+      const projSubHeld = sub.held + remSub;
+      const projSubAtt = sub.att + simSubAtt;
+      const projSubPct = projSubHeld > 0 ? (projSubAtt / projSubHeld * 100) : 0;
+      const pass = projSubPct >= 75;
+
+      return `
+        <tr>
+          <td>
+            <strong>${sub.code}</strong>
+            <div style="font-size:11px; color:var(--text-muted);">${sub.name}</div>
+          </td>
+          <td style="text-align:right; font-family:var(--font-mono);">${sub.pct.toFixed(2)}%</td>
+          <td style="text-align:right; font-family:var(--font-mono);">${remSub} classes</td>
+          <td style="text-align:right; font-family:var(--font-mono);">${simSubAtt} / ${remSub}</td>
+          <td style="text-align:right; font-family:var(--font-mono); font-weight:700; color:${pass ? 'var(--status-good-text)' : 'var(--status-bad-text)'}">
+            ${projSubPct.toFixed(2)}%
+          </td>
+          <td style="text-align:right;">
+            <span class="status-badge ${pass ? 'safe' : 'below'}" style="font-size:11px; padding:2px 8px;">
+              ${pass ? 'Safe' : 'Shortage'}
+            </span>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+}
+
+function handleSimSliderChange(val) {
+  simSimulatedAttended = parseInt(val, 10);
+  renderSimulatorTab();
+}
+
+function applySimPreset(type) {
+  const me = getMyRecord();
+  const currentAttended = me.totalAttended + (me.dlRem || 0);
+  const currentHeld = me.totalHeld;
+  const remClasses = 24;
+  const finalHeld = currentHeld + remClasses;
+  const finalNeeded75 = Math.ceil(0.75 * finalHeld);
+
+  if (type === 'all') {
+    simSimulatedAttended = 24;
+  } else if (type === 'threshold') {
+    simSimulatedAttended = Math.min(24, Math.max(0, finalNeeded75 - currentAttended));
+  } else if (type === 'theory') {
+    simSimulatedAttended = 16;
+  } else if (type === 'none') {
+    simSimulatedAttended = 0;
+  }
+  renderSimulatorTab();
+}
+
 
 function fmtRaw(val) {
   const absent = (val === null || val === undefined || val === '' || val === 'Absent' || val === '-');
@@ -2664,10 +3822,18 @@ function renderLeaderboardTab() {
 
   document.getElementById('leaderboardSummaryArea').innerHTML = podiumHtml;
 
-  // 2. Filter List
+  // 2. Filter List by Section or Sprint Risk Status
   let filtered = fullList;
-  if (rankSectionFilter !== 'all') {
+  if (rankSectionFilter === '1' || rankSectionFilter === '2') {
     filtered = filtered.filter(x => String(x.section) === rankSectionFilter);
+  } else if (rankSectionFilter === 'safe' || rankSectionFilter === 'danger' || rankSectionFilter === 'impossible') {
+    filtered = filtered.filter(x => {
+      const sRec = ALL_STUDENTS.find(s => s.enrollment === x.enrollment);
+      if (!sRec) return false;
+      const effAtt = sRec.totalAttended + (sRec.dlRem || 0);
+      const rec = computeScheduleRecovery(sRec.totalHeld, effAtt, targetPct, sRec.section);
+      return rec.status === rankSectionFilter;
+    });
   }
   if (rankSearchQuery && rankSearchQuery.trim().length > 0) {
     const q = rankSearchQuery.toLowerCase().trim();
@@ -2710,9 +3876,22 @@ function renderLeaderboardTab() {
           #${item.rank}
         </td>
         <td>
-          <div style="font-weight:600; color:var(--text-main);">
-            ${item.name}
+          <div style="font-weight:600; color:var(--text-main); display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <span>${item.name}</span>
             ${item.isMe ? '<span class="you-badge-tag">YOU</span>' : ''}
+            ${(() => {
+              const sRec = ALL_STUDENTS.find(s => s.enrollment === item.enrollment);
+              if (!sRec) return '';
+              const effAtt = sRec.totalAttended + (sRec.dlRem || 0);
+              const rec = computeScheduleRecovery(sRec.totalHeld, effAtt, targetPct, sRec.section);
+              if (rec.status === 'safe') {
+                return `<span class="sprint-pill success" style="font-size:10px; padding:2px 6px;">🛡️ ${rec.canMiss} skips</span>`;
+              } else if (rec.status === 'danger') {
+                return `<span class="sprint-pill warning" style="font-size:10px; padding:2px 6px;">⚡ Need ${rec.needed}</span>`;
+              } else {
+                return `<span class="sprint-pill alert" style="font-size:10px; padding:2px 6px;">🚨 Max ${rec.maxAchievablePct.toFixed(0)}%</span>`;
+              }
+            })()}
           </div>
           <div style="font-size:11px; font-family:var(--font-mono); color:var(--text-muted);">
             <code>${item.enrollment}</code> · Sec ${item.section}
@@ -2756,9 +3935,18 @@ function handleRankSearch(val) {
 
 function setRankSectionFilter(sec) {
   rankSectionFilter = sec;
-  document.getElementById('secBtnAll').classList.toggle('active', sec === 'all');
-  document.getElementById('secBtn1').classList.toggle('active', sec === '1');
-  document.getElementById('secBtn2').classList.toggle('active', sec === '2');
+  const btnIds = {
+    'all': 'secBtnAll',
+    '1': 'secBtn1',
+    '2': 'secBtn2',
+    'safe': 'secBtnSafe',
+    'danger': 'secBtnDanger',
+    'impossible': 'secBtnCapped'
+  };
+  Object.keys(btnIds).forEach(k => {
+    const el = document.getElementById(btnIds[k]);
+    if (el) el.classList.toggle('active', sec === k);
+  });
   renderLeaderboardTab();
 }
 
@@ -2873,20 +4061,22 @@ function switchModalSubTab(tab) {
   const container = document.getElementById('modalBodyContent');
 
   if (isAtt) {
-    const recovery = computeScheduleRecovery(s.totalHeld, s.totalAttended, targetPct);
+    const effectiveAttended = s.totalAttended + (s.dlRem || 0);
+    const recovery = computeScheduleRecovery(s.totalHeld, effectiveAttended, targetPct, s.section);
     const subList = Object.keys(s.subjects).map(k => s.subjects[k]).filter(x => !x.isOneOff);
     const effectivePct = (s.overallPct && s.overallPct > 0) ? s.overallPct : s.totalPct;
+    const recColor = recovery.status === 'safe' ? 'var(--status-good-text)' : (recovery.status === 'danger' ? 'var(--status-warn-text)' : 'var(--status-bad-text)');
 
     container.innerHTML = `
       <div style="background:var(--bg-subtle); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); padding:22px 26px; margin-bottom:22px;">
         <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:16px;">
           <div>
-            <div style="font-size:12px; text-transform:uppercase; color:var(--text-muted); font-weight:700; letter-spacing:0.5px; margin-bottom:6px;">Cumulative Attendance</div>
-            <div style="font-size:46px; font-weight:800; font-family:var(--font-mono); line-height:1; color:var(--status-${recovery.status === 'safe' ? 'good' : 'bad'}-text)">
+            <div style="font-size:12px; text-transform:uppercase; color:var(--text-muted); font-weight:700; letter-spacing:0.5px; margin-bottom:6px;">Cumulative Attendance (Cutoff: Nov 5)</div>
+            <div style="font-size:46px; font-weight:800; font-family:var(--font-mono); line-height:1; color:${recColor}">
               ${effectivePct.toFixed(2)}%
             </div>
             ${s.dlRem > 0 ? `<div style="font-size:12px; color:var(--text-muted); font-family:var(--font-mono); margin-top:2px;">Raw: ${s.totalPct.toFixed(2)}% · +${s.dlRem} remedial credit</div>` : ''}
-            <div style="font-size:15px; margin-top:8px; font-weight:700; color:var(--status-${recovery.status === 'safe' ? 'good' : 'bad'}-text)">
+            <div style="font-size:15px; margin-top:8px; font-weight:700; color:${recColor}">
               ${recovery.headline}
             </div>
           </div>
@@ -2894,10 +4084,10 @@ function switchModalSubTab(tab) {
             <div style="font-size:12px; text-transform:uppercase; color:var(--text-muted); font-weight:700; letter-spacing:0.5px; margin-bottom:6px;">Classes Attended</div>
             <div style="font-size:30px; font-weight:800; font-family:var(--font-mono); color:var(--text-main);">${s.totalAttended} <span style="font-size:16px; color:var(--text-muted); font-weight:500;">/ ${s.totalHeld}</span></div>
             ${s.dlRem > 0 ? `<div style="font-size:12px; font-weight:700; color:var(--status-good-text); margin-top:2px;">+${s.dlRem} Remedial/DL Classes</div>` : ''}
-            <div style="font-size:13px; font-family:var(--font-mono); color:var(--text-muted); margin-top:4px;">Section ${s.section} · S.No ${s.sno}</div>
+            <div style="font-size:13px; font-family:var(--font-mono); color:var(--text-muted); margin-top:4px;">Section ${s.section} · S.No ${s.sno} · 24 Classes Remain</div>
           </div>
         </div>
-        ${recovery.status === 'behind' ? `<div style="font-size:13px; color:var(--text-muted); margin-top:12px; padding-top:12px; border-top:1px dashed var(--border-subtle); line-height:1.5;">${recovery.recoveryNote}</div>` : ''}
+        <div style="font-size:13px; color:var(--text-muted); margin-top:12px; padding-top:12px; border-top:1px dashed var(--border-subtle); line-height:1.5;">${recovery.subnote}</div>
       </div>
 
       <div style="font-size:16px; font-weight:700; margin-bottom:12px; color:var(--text-main);">Subject Breakdown</div>
@@ -3052,20 +4242,42 @@ function handleModalBackdropClick(e) {
 // ==========================================================================
 function switchMainTab(tab) {
   const isAtt = tab === 'att';
+  const isTimetable = tab === 'timetable';
+  const isSim = tab === 'sim';
   const isMarks = tab === 'marks';
   const isRanks = tab === 'ranks';
 
-  document.getElementById('tabBtnAtt').classList.toggle('active', isAtt);
-  document.getElementById('tabBtnMarks').classList.toggle('active', isMarks);
-  document.getElementById('tabBtnRanks').classList.toggle('active', isRanks);
+  const btnAtt = document.getElementById('tabBtnAtt');
+  const btnTimetable = document.getElementById('tabBtnTimetable');
+  const btnSim = document.getElementById('tabBtnSim');
+  const btnMarks = document.getElementById('tabBtnMarks');
+  const btnRanks = document.getElementById('tabBtnRanks');
 
-  document.getElementById('panelAtt').classList.toggle('active', isAtt);
-  document.getElementById('panelMarks').classList.toggle('active', isMarks);
-  document.getElementById('panelRanks').classList.toggle('active', isRanks);
+  if (btnAtt) btnAtt.classList.toggle('active', isAtt);
+  if (btnTimetable) btnTimetable.classList.toggle('active', isTimetable);
+  if (btnSim) btnSim.classList.toggle('active', isSim);
+  if (btnMarks) btnMarks.classList.toggle('active', isMarks);
+  if (btnRanks) btnRanks.classList.toggle('active', isRanks);
 
-  location.hash = isAtt ? 'attendance' : (isMarks ? 'marks' : 'ranks');
+  const panelAtt = document.getElementById('panelAtt');
+  const panelTimetable = document.getElementById('panelTimetable');
+  const panelSim = document.getElementById('panelSim');
+  const panelMarks = document.getElementById('panelMarks');
+  const panelRanks = document.getElementById('panelRanks');
 
-  if (isRanks) {
+  if (panelAtt) panelAtt.classList.toggle('active', isAtt);
+  if (panelTimetable) panelTimetable.classList.toggle('active', isTimetable);
+  if (panelSim) panelSim.classList.toggle('active', isSim);
+  if (panelMarks) panelMarks.classList.toggle('active', isMarks);
+  if (panelRanks) panelRanks.classList.toggle('active', isRanks);
+
+  location.hash = isAtt ? 'attendance' : (isTimetable ? 'timetable' : (isSim ? 'simulator' : (isMarks ? 'marks' : 'ranks')));
+
+  if (isTimetable) {
+    renderTimetableTab();
+  } else if (isSim) {
+    renderSimulatorTab();
+  } else if (isRanks) {
     renderLeaderboardTab();
   }
 }
@@ -3351,6 +4563,8 @@ function setPrimaryStudent(enrollment, save = true) {
 
   // Re-render
   renderAttendanceTab();
+  renderTimetableTab();
+  renderSimulatorTab();
   renderMarksTab();
   renderLeaderboardTab();
 
@@ -3489,10 +4703,14 @@ if (savedEnroll && ALL_STUDENTS.some(s => s.enrollment === savedEnroll)) {
 
 // Boot
 renderAttendanceTab();
+renderTimetableTab();
+renderSimulatorTab();
 renderMarksTab();
 renderLeaderboardTab();
 
-if (location.hash === '#marks') switchMainTab('marks');
+if (location.hash === '#timetable') switchMainTab('timetable');
+else if (location.hash === '#simulator') switchMainTab('sim');
+else if (location.hash === '#marks') switchMainTab('marks');
 else if (location.hash === '#ranks') switchMainTab('ranks');
 
 // Auto-sync in background on load
