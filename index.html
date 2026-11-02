@@ -2280,89 +2280,75 @@ body {
 
   <!-- ATTENDANCE PANEL -->
   <main class="tab-panel active" id="panelAtt">
-    <!-- SEMESTER FINALE SPRINT COUNTDOWN CARD -->
-    <div class="sprint-countdown-card" id="sprintCountdownCard">
-      <div class="sprint-badge-row">
-        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-          <span class="sprint-pill alert">🚨 Final Sprint: 4 Days Left</span>
-          <span class="sprint-pill">Cutoff: Thu, Nov 5, 2026</span>
-          <span class="sprint-pill">Remaining: 24 Classes (6/day)</span>
-        </div>
-        <div class="sprint-quick-links">
-          <button class="sprint-link-btn" onclick="switchMainTab('timetable')">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            View Timetable
-          </button>
-          <button class="sprint-link-btn" onclick="switchMainTab('sim')">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
-            What-If Simulator
-          </button>
-        </div>
-      </div>
-      <div id="sprintStatusBannerSummary" style="font-size:13px; font-weight:600; color:var(--text-main); line-height:1.5;">
-        <!-- Injected via JavaScript -->
-      </div>
-      <!-- Today's Schedule Mini-Widget -->
-      <div class="today-classes-box" id="todayClassesBox">
-        <div class="today-classes-header">
-          <div style="font-size:12px; font-weight:700; color:var(--text-main); display:flex; align-items:center; gap:6px;">
-            <span>📅 Today's Schedule</span>
-            <span style="font-size:11px; font-weight:600; color:var(--text-muted);" id="todayDayNameLabel">Monday</span>
-          </div>
-          <span style="font-size:11px; font-weight:700; color:var(--status-good-text); font-family:var(--font-mono);" id="todayCapacityLabel">6 Units Counted</span>
-        </div>
-        <div class="today-periods-grid" id="todayPeriodsGrid">
-          <!-- Injected via JavaScript -->
-        </div>
-      </div>
-    </div>
-
-    <!-- HERO ATTENDANCE SCORECARD -->
-    <div class="hero-metric-card">
+    <!-- UNIFIED HERO ATTENDANCE & SPRINT SCORECARD -->
+    <div class="hero-metric-card" id="unifiedHeroCard">
       <div class="hero-top-flex">
         <div>
-          <div style="font-size:11px; text-transform:uppercase; color:var(--text-muted); font-weight:700; letter-spacing:0.4px;">Aggregate Attendance</div>
+          <div style="font-size:11px; text-transform:uppercase; color:var(--text-muted); font-weight:700; letter-spacing:0.5px;">Aggregate Attendance · MCA 1st Sem</div>
           <div class="hero-number-wrap">
-            <span class="hero-big-number tabular-nums" id="heroAttPct">76.05%</span>
-            <span class="status-badge safe" id="heroStatusBadge">Safe (+1.05% margin)</span>
+            <span class="hero-big-number tabular-nums" id="heroAttPct">77.74%</span>
+            <span class="status-badge safe" id="heroStatusBadge">Safe (+2.74% margin)</span>
           </div>
+          <div style="font-size:12px; color:var(--text-muted); font-family:var(--font-mono); margin-top:3px;" id="heroAttRatio">218 of 283 classes (+2 remedial credit · raw: 77.03%)</div>
         </div>
 
-        <!-- Target Selector Controls -->
-        <div class="target-selector-box">
-          <label>Target:</label>
-          <button class="target-pill-btn" onclick="setTargetPct(70)">70%</button>
-          <button class="target-pill-btn active" id="targetBtn75" onclick="setTargetPct(75)">75%</button>
-          <button class="target-pill-btn" onclick="setTargetPct(80)">80%</button>
-          <button class="target-pill-btn" onclick="setTargetPct(85)">85%</button>
+        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
+          <!-- Target Selector Controls -->
+          <div class="target-selector-box">
+            <label>Target:</label>
+            <button class="target-pill-btn" onclick="setTargetPct(70)">70%</button>
+            <button class="target-pill-btn active" id="targetBtn75" onclick="setTargetPct(75)">75%</button>
+            <button class="target-pill-btn" onclick="setTargetPct(80)">80%</button>
+            <button class="target-pill-btn" onclick="setTargetPct(85)">85%</button>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <span class="sprint-pill alert" style="font-size:10px; padding:2px 8px;">⏳ Cutoff: Thu, Nov 5 (24 Left)</span>
+            <button class="sprint-link-btn" onclick="switchMainTab('sim')" style="font-size:11px; padding:3px 8px;">
+              ⚡ Simulator
+            </button>
+          </div>
         </div>
       </div>
 
       <!-- Hairline Progress Rail with Target Needle -->
       <div class="progress-rail">
-        <div class="progress-fill safe" id="heroProgressFill" style="width: 76.05%;"></div>
+        <div class="progress-fill safe" id="heroProgressFill" style="width: 77.74%;"></div>
         <div class="target-needle" id="heroTargetNeedle" style="left: 75%;" data-label="75% TARGET"></div>
       </div>
 
-      <div class="hero-footer-row">
-        <div><strong class="tabular-nums" id="heroAttRatio">200 of 263</strong> classes attended</div>
-        <div id="heroRunwaySummary" style="font-weight:600;">Can miss 3 more classes before falling below 75%</div>
+      <!-- Sprint Runway Verdict Line -->
+      <div id="heroRunwaySummary" style="font-weight:700; font-size:13px; margin: 4px 0 12px; line-height:1.4;">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- 3 Key Metric Cells: Sprint Needed | Bunk Runway Buffer | Max Achievable -->
+      <div class="recovery-metrics-grid" id="heroKeyMetricsGrid">
+        <!-- Injected via JavaScript -->
       </div>
     </div>
 
-    <!-- SCHEDULE RECOVERY ENGINE -->
-    <div class="recovery-banner safe-mode" id="scheduleRecoveryBanner">
-      <!-- Injected via JavaScript -->
-    </div>
-
     <!-- SUBJECT-WISE ATTENDANCE LIST -->
-    <div class="section-meta-header">
+    <div class="section-meta-header" style="margin-top:24px;">
       <h2 class="section-heading-text">Subject Breakdown</h2>
       <button class="btn-sort-toggle" onclick="toggleSubjectSort()">Order: <span id="sortOrderLabel">Sheet Order</span></button>
     </div>
 
     <div class="subject-grid" id="subjectGridList">
       <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- TODAY'S SCHEDULE (MOVED TO BOTTOM AS HELPFUL REFERENCE) -->
+    <div class="today-bottom-section" id="todayBottomSection" style="margin-top:28px;">
+      <div class="section-meta-header" style="margin-bottom:12px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <h2 class="section-heading-text" id="todayDayNameLabel">Today's Schedule</h2>
+          <span style="font-size:11px; font-weight:700; color:var(--status-good-text); font-family:var(--font-mono); background:var(--bg-subtle); padding:2px 8px; border-radius:var(--radius-xs); border:1px solid var(--border-subtle);" id="todayCapacityLabel">6 Units Counted</span>
+        </div>
+        <button class="btn-sort-toggle" onclick="switchMainTab('timetable')">Full Timetable →</button>
+      </div>
+      <div class="today-periods-grid" id="todayPeriodsGrid">
+        <!-- Injected via JavaScript -->
+      </div>
     </div>
   </main>
 
@@ -2965,11 +2951,11 @@ function renderAttendanceTab() {
   const overallRecovery = computeScheduleRecovery(me.totalHeld, effectiveAttended, targetPct, me.section);
   const status = overallRecovery.status; // 'safe', 'danger', or 'impossible'
 
-  // Hero Card
+  // Hero Card Big Number & Ratio
   document.getElementById('heroAttPct').textContent = effectivePct.toFixed(2) + '%';
-  let ratioStr = `${me.totalAttended} of ${me.totalHeld}`;
+  let ratioStr = `${me.totalAttended} of ${me.totalHeld} classes attended`;
   if (me.dlRem > 0) {
-    ratioStr += ` (+${me.dlRem} remedial credit · raw: ${pct.toFixed(2)}%)`;
+    ratioStr += ` (+${me.dlRem} remedial/DL credit · raw: ${pct.toFixed(2)}%)`;
   }
   document.getElementById('heroAttRatio').textContent = ratioStr;
 
@@ -2991,54 +2977,86 @@ function renderAttendanceTab() {
   needle.style.left = targetPct + '%';
   needle.setAttribute('data-label', `${targetPct}% TARGET`);
 
+  // Single Clear Sprint Runway Verdict Line
   const runwaySummary = document.getElementById('heroRunwaySummary');
   if (overallRecovery.status === 'safe') {
-    runwaySummary.textContent = overallRecovery.canMiss >= overallRecovery.remClasses
-      ? '100% Guaranteed Safe: Can skip all remaining sprint classes.'
-      : `Runway Buffer: Can skip ${overallRecovery.canMiss} of ${overallRecovery.remClasses} remaining classes.`;
-    runwaySummary.style.color = 'var(--status-good-text)';
+    runwaySummary.innerHTML = `
+      <span style="color:var(--status-good-text);">🛡️ ${overallRecovery.headline}</span>
+      <span style="font-size:12px; font-weight:500; color:var(--text-muted); margin-left:6px;">(${overallRecovery.subnote})</span>
+    `;
   } else if (overallRecovery.status === 'danger') {
-    runwaySummary.textContent = `High Stakes: Must attend at least ${overallRecovery.needed} of ${overallRecovery.remClasses} classes.`;
-    runwaySummary.style.color = 'var(--status-warn-text)';
+    runwaySummary.innerHTML = `
+      <span style="color:var(--status-warn-text);">⚡ ${overallRecovery.headline}</span>
+      <span style="font-size:12px; font-weight:500; color:var(--text-muted); margin-left:6px;">(${overallRecovery.subnote})</span>
+    `;
   } else {
-    runwaySummary.textContent = `Capped: Cannot reach ${targetPct}% before Nov 5 (Max: ${overallRecovery.maxAchievablePct.toFixed(1)}%).`;
-    runwaySummary.style.color = 'var(--status-bad-text)';
+    runwaySummary.innerHTML = `
+      <span style="color:var(--status-bad-text);">🚨 ${overallRecovery.headline}</span>
+      <span style="font-size:12px; font-weight:500; color:var(--text-muted); margin-left:6px;">(${overallRecovery.subnote})</span>
+    `;
   }
 
-  // Populate Sprint Countdown Banner
-  const sprintSummaryEl = document.getElementById('sprintStatusBannerSummary');
-  if (sprintSummaryEl) {
+  // 3 Essential Metric Cells (Zero Duplicate Data)
+  const metricsGrid = document.getElementById('heroKeyMetricsGrid');
+  if (metricsGrid) {
     if (overallRecovery.status === 'safe') {
-      sprintSummaryEl.innerHTML = `
-        <div style="color:var(--status-good-text);">
-          <strong>${overallRecovery.headline}</strong>
+      metricsGrid.innerHTML = `
+        <div class="recovery-metric-cell">
+          <div class="label">Bunk Runway Buffer</div>
+          <div class="value tabular-nums" style="color:var(--status-good-text);">${overallRecovery.canMiss} <span style="font-size:13px; font-weight:500; color:var(--text-muted)">of 24 skips</span></div>
+          <div class="sub">Can safely miss ~${overallRecovery.daysBuffer} college days</div>
         </div>
-        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
-          ${overallRecovery.subnote}
+        <div class="recovery-metric-cell">
+          <div class="label">Sprint Classes Needed</div>
+          <div class="value tabular-nums">${overallRecovery.needed} <span style="font-size:13px; font-weight:500; color:var(--text-muted)">of 24</span></div>
+          <div class="sub">Attend ${overallRecovery.needed} to guarantee ≥ ${targetPct}% on Nov 5</div>
+        </div>
+        <div class="recovery-metric-cell">
+          <div class="label">Nov 5 Max Achievable</div>
+          <div class="value tabular-nums" style="color:var(--status-good-text);">${overallRecovery.maxAchievablePct.toFixed(2)}%</div>
+          <div class="sub">With 100% attendance in all 24 classes</div>
         </div>
       `;
     } else if (overallRecovery.status === 'danger') {
-      sprintSummaryEl.innerHTML = `
-        <div style="color:var(--status-warn-text);">
-          <strong>${overallRecovery.headline}</strong>
+      metricsGrid.innerHTML = `
+        <div class="recovery-metric-cell">
+          <div class="label">Classes to Attend</div>
+          <div class="value tabular-nums" style="color:var(--status-warn-text);">${overallRecovery.needed} <span style="font-size:13px; font-weight:500; color:var(--text-muted)">of 24</span></div>
+          <div class="sub">Must attend minimum ${overallRecovery.needed} classes</div>
         </div>
-        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
-          ${overallRecovery.subnote}
+        <div class="recovery-metric-cell">
+          <div class="label">Skip Allowance</div>
+          <div class="value tabular-nums">${overallRecovery.canMiss} <span style="font-size:13px; font-weight:500; color:var(--text-muted)">skips allowed</span></div>
+          <div class="sub">Maximum bunk margin before Nov 5</div>
+        </div>
+        <div class="recovery-metric-cell">
+          <div class="label">Nov 5 Max Achievable</div>
+          <div class="value tabular-nums" style="color:var(--status-good-text);">${overallRecovery.maxAchievablePct.toFixed(2)}%</div>
+          <div class="sub">With 100% attendance (24/24 classes)</div>
         </div>
       `;
     } else {
-      sprintSummaryEl.innerHTML = `
-        <div style="color:var(--status-bad-text);">
-          <strong>${overallRecovery.headline}</strong>
+      metricsGrid.innerHTML = `
+        <div class="recovery-metric-cell">
+          <div class="label">Nov 5 Max Achievable</div>
+          <div class="value tabular-nums" style="color:var(--status-bad-text);">${overallRecovery.maxAchievablePct.toFixed(2)}%</div>
+          <div class="sub">With 100% sprint attendance (24/24)</div>
         </div>
-        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
-          ${overallRecovery.subnote}
+        <div class="recovery-metric-cell">
+          <div class="label">Deficit Shortfall</div>
+          <div class="value tabular-nums" style="color:var(--status-bad-text);">${overallRecovery.shortfall} <span style="font-size:13px; font-weight:500; color:var(--text-muted)">classes</span></div>
+          <div class="sub">Beyond remaining semester hours</div>
+        </div>
+        <div class="recovery-metric-cell">
+          <div class="label">Institutional Action</div>
+          <div class="value" style="font-size:16px; font-weight:700; color:var(--status-bad-text);">Dean Waiver</div>
+          <div class="sub">Request Medical / DL condonation</div>
         </div>
       `;
     }
   }
 
-  // Populate Today's Classes Mini-Widget
+  // Populate Today's Classes (At the bottom of Attendance tab)
   const todayIdx = new Date().getDay();
   const dayMap = ['Mon', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const todayDay = dayMap[todayIdx] || 'Mon';
@@ -3066,102 +3084,6 @@ function renderAttendanceTab() {
       `).join('');
     }
   }
-
-  // Render Schedule Recovery Engine Banner
-  const banner = document.getElementById('scheduleRecoveryBanner');
-  banner.className = `recovery-banner ${overallRecovery.status === 'safe' ? 'safe-mode' : 'behind-mode'}`;
-
-  const subjectList = Object.keys(me.subjects).map(k => me.subjects[k]).filter(s => !s.isOneOff);
-  const behindSubjects = subjectList.filter(s => s.pct < targetPct);
-  const sprint = getSprintBreakdown(me.section);
-
-  let bannerHtml = `
-    <div class="recovery-top-row">
-      <div class="recovery-title">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-        Semester Sprint Recovery Engine (Nov 2 – Nov 5 Cutoff · 24 Remaining Classes)
-      </div>
-      <span class="recovery-model-badge">Section ${me.section} · ${sprint.sectionName}</span>
-    </div>
-  `;
-
-  if (overallRecovery.status === 'safe') {
-    bannerHtml += `
-      <div style="font-size:13px; color:var(--text-main); font-weight:500;">
-        ${overallRecovery.headline}
-      </div>
-      <div class="recovery-metrics-grid">
-        <div class="recovery-metric-cell">
-          <div class="label">Bunk Runway Buffer</div>
-          <div class="value">${overallRecovery.canMiss} <span style="font-size:13px; font-weight:500; color:var(--text-muted)">of 24 classes</span></div>
-          <div class="sub">Can safely skip ~${overallRecovery.daysBuffer} days of classes</div>
-        </div>
-        <div class="recovery-metric-cell">
-          <div class="label">Sprint Classes Needed</div>
-          <div class="value">${overallRecovery.needed} <span style="font-size:13px; font-weight:500; color:var(--text-muted)">of 24</span></div>
-          <div class="sub">Attend ${overallRecovery.needed} classes to lock ${targetPct}%</div>
-        </div>
-        <div class="recovery-metric-cell">
-          <div class="label">Max Achievable %</div>
-          <div class="value tabular-nums" style="color:var(--status-good-text);">${overallRecovery.maxAchievablePct.toFixed(2)}%</div>
-          <div class="sub">With 100% attendance in all 24 classes</div>
-        </div>
-      </div>
-    `;
-  } else if (overallRecovery.status === 'danger') {
-    bannerHtml += `
-      <div style="font-size:13px; color:var(--status-warn-text); font-weight:600;">
-        ${overallRecovery.headline}
-      </div>
-      <div style="font-size:12px; color:var(--text-muted);">
-        ${overallRecovery.subnote}
-      </div>
-      <div class="recovery-metrics-grid">
-        <div class="recovery-metric-cell">
-          <div class="label">Classes to Attend</div>
-          <div class="value" style="color:var(--status-warn-text);">${overallRecovery.needed} <span style="font-size:13px; font-weight:500; color:var(--text-muted)">of 24</span></div>
-          <div class="sub">Must attend minimum ${overallRecovery.needed} classes</div>
-        </div>
-        <div class="recovery-metric-cell">
-          <div class="label">Skip Allowance</div>
-          <div class="value tabular-nums">${overallRecovery.canMiss} <span style="font-size:12px; color:var(--text-muted);">classes</span></div>
-          <div class="sub">Maximum bunk margin</div>
-        </div>
-        <div class="recovery-metric-cell">
-          <div class="label">Max Achievable %</div>
-          <div class="value tabular-nums" style="color:var(--status-good-text);">${overallRecovery.maxAchievablePct.toFixed(2)}%</div>
-          <div class="sub">With 100% sprint attendance</div>
-        </div>
-      </div>
-    `;
-  } else {
-    bannerHtml += `
-      <div style="font-size:13px; color:var(--status-bad-text); font-weight:600;">
-        ${overallRecovery.headline}
-      </div>
-      <div style="font-size:12px; color:var(--text-muted);">
-        ${overallRecovery.subnote}
-      </div>
-      <div class="recovery-metrics-grid">
-        <div class="recovery-metric-cell">
-          <div class="label">Maximum Achievable</div>
-          <div class="value" style="color:var(--status-bad-text);">${overallRecovery.maxAchievablePct.toFixed(2)}%</div>
-          <div class="sub">With 100% attendance (24/24 classes)</div>
-        </div>
-        <div class="recovery-metric-cell">
-          <div class="label">Deficit Shortfall</div>
-          <div class="value tabular-nums" style="color:var(--status-bad-text);">${overallRecovery.shortfall} <span style="font-size:12px; color:var(--text-muted);">classes</span></div>
-          <div class="sub">Beyond available semester hours</div>
-        </div>
-        <div class="recovery-metric-cell">
-          <div class="label">Required Action</div>
-          <div class="value" style="font-size:14px; font-weight:700; color:var(--status-bad-text);">Dean Waiver</div>
-          <div class="sub">Submit Medical / DL exemption</div>
-        </div>
-      </div>
-    `;
-  }
-  banner.innerHTML = bannerHtml;
 
   // Render Subject List with Sprint Impact
   let subjects = [...subjectList];
