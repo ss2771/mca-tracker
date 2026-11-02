@@ -2188,6 +2188,39 @@ body {
   }
 }
 
+
+/* App Footer */
+.app-footer {
+  margin-top: 44px;
+  margin-bottom: 24px;
+  padding: 24px 20px;
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+.footer-creator {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.2px;
+}
+.footer-creator strong {
+  color: var(--text-main);
+  font-weight: 700;
+}
+.footer-sub {
+  font-size: 11px;
+  color: var(--text-subtle);
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
 </style>
 </head>
 <body>
@@ -2591,7 +2624,19 @@ body {
       </table>
     </div>
   </main>
-</div>
+
+    <!-- APPLICATION FOOTER -->
+    <footer class="app-footer">
+      <div class="footer-creator">
+        Designed & Created by <strong style="color:var(--text-main);">Suryansh Singh</strong>
+      </div>
+      <div class="footer-sub">
+        <span>MCA 1st Semester · Batch 2026–28</span>
+        <span>·</span>
+        <span>Bharati Vidyapeeth's Institute of Computer Applications and Management (BVICAM)</span>
+      </div>
+    </footer>
+  </div>
 
 <!-- STUDENT DETAIL FULL-PAGE VIEW (SEARCH & LEADERBOARD DRILL-DOWN) -->
 <div class="modal-backdrop" id="studentModalBackdrop" onclick="handleModalBackdropClick(event)">
