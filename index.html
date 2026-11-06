@@ -3464,6 +3464,230 @@ body {
   }
 }
 
+
+/* ==========================================================================
+   ENTERPRISE SLIDE-OVER SIDE DRAWER (Linear & Stripe Specification)
+   ========================================================================== */
+#studentModalBackdrop,
+#disputeModalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: none;
+  align-items: stretch;
+  justify-content: flex-end;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#studentModalBackdrop.active,
+#disputeModalBackdrop.active {
+  display: flex;
+  opacity: 1;
+}
+
+#studentModalBackdrop .modal-dialog.modal-page-mode {
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border-strong);
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  border-radius: 0;
+  max-width: 780px;
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.9);
+  padding: 0;
+  position: relative;
+  transform: translateX(0);
+  animation: drawerSlideInRight 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#disputeModalBackdrop .modal-dialog {
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border-strong) !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-right: none !important;
+  border-radius: 0 !important;
+  max-width: 660px !important;
+  width: 100% !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.9) !important;
+  padding: 0 !important;
+  position: relative;
+  animation: drawerSlideInRight 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes drawerSlideInRight {
+  from { opacity: 0; transform: translateX(64px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@media (max-width: 768px) {
+  #studentModalBackdrop,
+  #disputeModalBackdrop {
+    align-items: flex-end !important;
+    justify-content: stretch !important;
+  }
+  #studentModalBackdrop .modal-dialog.modal-page-mode,
+  #disputeModalBackdrop .modal-dialog {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 94vh !important;
+    max-height: 94vh !important;
+    border-radius: 20px 20px 0 0 !important;
+    border-left: none !important;
+    border-top: 1px solid var(--border-strong) !important;
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.85) !important;
+    animation: drawerSlideInUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+}
+
+@keyframes drawerSlideInUp {
+  from { opacity: 0; transform: translateY(64px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Command Palette Profile Picker Dialog */
+#profilePickerModalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1050;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+#profilePickerModalBackdrop.active {
+  display: flex;
+}
+#profilePickerModalBackdrop .modal-dialog {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  animation: modalScaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes modalScaleUp {
+  from { opacity: 0; transform: scale(0.96) translateY(-8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.kbd-esc-hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  padding: 2px 5px;
+  border-radius: 3px;
+  color: var(--text-muted);
+  margin-right: 6px;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+/* Executive Podium Cards */
+.leaderboard-podium-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.podium-card {
+  border-radius: var(--radius-md);
+  padding: 20px;
+  position: relative;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+.podium-card:hover {
+  transform: translateY(-2px);
+}
+.podium-card.rank-1 {
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.09) 0%, rgba(10, 10, 10, 0.98) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.08);
+}
+.podium-card.rank-2 {
+  background: linear-gradient(180deg, rgba(203, 213, 225, 0.06) 0%, rgba(10, 10, 10, 0.98) 100%);
+  border: 1px solid rgba(203, 213, 225, 0.28);
+  box-shadow: 0 4px 20px rgba(203, 213, 225, 0.05);
+}
+.podium-card.rank-3 {
+  background: linear-gradient(180deg, rgba(217, 119, 6, 0.06) 0%, rgba(10, 10, 10, 0.98) 100%);
+  border: 1px solid rgba(217, 119, 6, 0.28);
+  box-shadow: 0 4px 20px rgba(217, 119, 6, 0.05);
+}
+.podium-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+.podium-badge.gold {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+.podium-badge.silver {
+  background: rgba(203, 213, 225, 0.12);
+  color: #cbd5e1;
+  border: 1px solid rgba(203, 213, 225, 0.25);
+}
+.podium-badge.bronze {
+  background: rgba(217, 119, 6, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+}
+
+/* Formal Grievance Letter & Print Styling */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .erp-command-header, .welcome-banner, .erp-student-dossier, .erp-kpi-ribbon,
+  .segmented-nav, .app-footer, .mobile-bottom-nav, .teacher-audit-header,
+  .dispute-form-group, .dispute-actions-row, .modal-sticky-topbar button,
+  .btn-erp-action, .drawer-close-btn, #studentModalBackdrop {
+    display: none !important;
+  }
+  #disputeModalBackdrop {
+    position: static !important;
+    display: block !important;
+    background: transparent !important;
+  }
+  #disputeModalBackdrop .modal-dialog {
+    max-width: 100% !important;
+    height: auto !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3472,7 +3696,7 @@ body {
   <!-- WELCOME BANNER FOR OTHER STUDENTS -->
   <div class="welcome-banner" id="firstTimeVisitorNotice">
     <div>
-      👋 <strong>Welcome!</strong> Currently viewing as <strong id="noticeViewingName">Suryansh Singh</strong>. Are you a different student?
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:5px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><strong>Enterprise Session Active:</strong> Viewing profile of <strong id="noticeViewingName">Suryansh Singh</strong>. Not your profile?
     </div>
     <div style="display:flex; gap:8px; align-items:center;">
       <button onclick="openProfilePickerModal()" style="font-size:12px; font-weight:700; background:var(--accent-primary); color:var(--text-inverse); border:none; padding:6px 12px; border-radius:var(--radius-xs); cursor:pointer;">Select Your Profile</button>
@@ -3520,7 +3744,7 @@ body {
       <div class="dossier-info-col">
         <div class="dossier-name-row">
           <h1 class="dossier-student-name" id="profileStudentName">Suryansh Singh</h1>
-          <span class="dossier-status-tag verified">✓ Verified Student</span>
+          <span class="dossier-status-tag verified"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg>VERIFIED STUDENT</span>
           <button class="dossier-switch-btn" onclick="openProfilePickerModal()" title="Switch profile to any of 128 students">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             Switch Profile (128)
@@ -3551,7 +3775,7 @@ body {
     <div class="erp-kpi-cell">
       <div class="kpi-micro-label">REGULATORY ATTENDANCE</div>
       <div class="kpi-value tabular-nums" id="kpiAttPct">77.74%</div>
-      <div class="kpi-sub-label" id="kpiAttStatus">🛡️ Safe (+2.74% Margin)</div>
+      <div class="kpi-sub-label" id="kpiAttStatus"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Safe (+2.74% Margin)</div>
     </div>
     <div class="erp-kpi-cell">
       <div class="kpi-micro-label">CONTINUOUS ASSESSMENT (40M)</div>
@@ -3622,9 +3846,9 @@ body {
             <button class="target-pill-btn" onclick="setTargetPct(85)">85%</button>
           </div>
           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-            <span class="sprint-pill alert" id="heroCutoffBadge" style="font-size:10px; padding:2px 8px;">⏳ Cutoff: Thu, Nov 5</span>
-            <button class="sprint-link-btn" onclick="switchMainTab('sim')" style="font-size:11px; padding:3px 8px;">
-              ⚡ Simulator
+            <span class="sprint-pill alert" id="heroCutoffBadge" style="font-size:10px; padding:2px 8px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px; margin-right:3px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Cutoff: Thu, Nov 5</span>
+            <button class="sprint-link-btn" onclick="switchMainTab('sim')" style="font-size:11px; padding:3px 8px; display:inline-flex; align-items:center; gap:4px;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Simulator
             </button>
           </div>
         </div>
@@ -3711,7 +3935,7 @@ body {
       </div>
 
       <div class="sprint-countdown-pill">
-        <span style="font-size:16px;">⏳</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         <span><strong>Cutoff: Thursday, Nov 5, 2026</strong> · Only <strong>4 days</strong> (Mon–Thu: 24 counted classes) remain before semester classes officially conclude.</span>
       </div>
 
@@ -3728,16 +3952,16 @@ body {
       <div style="font-weight:700; font-size:12px; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px;">Attendance & Credit Rules</div>
       <div class="timetable-rules-grid">
         <div class="tt-rule-item">
-          <strong>🔬 2-Hour Practical Labs = 2 Units:</strong> Each scheduled 2-hour lab slot (2:00–4:00 PM or Friday blocks) carries 2 counted attendance units.
+          <strong><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><path d="M10 2v7.31"/><path d="M14 2v7.31"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/></svg>Practical Labs (2 Hours = 2 Units):</strong> Each scheduled 2-hour lab slot (2:00–4:00 PM or Friday blocks) carries 2 counted attendance units.
         </div>
         <div class="tt-rule-item">
-          <strong>👔 Corporate Grooming = 2 Units:</strong> Saturday 11:15–1:15 PM Corporate Grooming (PP-1) counts towards official institutional attendance.
+          <strong><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>Corporate Grooming (2 Hours = 2 Units):</strong> Saturday 11:15–1:15 PM Corporate Grooming (PP-1) counts towards official institutional attendance.
         </div>
         <div class="tt-rule-item">
-          <strong>📖 Theory = 1 Unit / Hour:</strong> Daily 1-hour theory lectures each carry 1 attendance unit.
+          <strong><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Theory Lectures (1 Hour = 1 Unit):</strong> Daily 1-hour theory lectures each carry 1 attendance unit.
         </div>
         <div class="tt-rule-item">
-          <strong>🚫 Tutorials (4:00–5:00 PM) = Non-counted:</strong> Remedial tutorials are extra support and excluded from counted attendance.
+          <strong><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>Remedial Tutorials (Non-counted Units):</strong> Remedial tutorials are extra support and excluded from counted attendance.
         </div>
       </div>
     </div>
@@ -3755,12 +3979,12 @@ body {
       <!-- Scope Selector: Live Clock vs Full Week -->
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px; background:var(--bg-subtle); padding:8px 14px; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
         <div style="font-size:12px; font-weight:700; color:var(--text-main); display:flex; align-items:center; gap:6px;">
-          <span>⏱️ Sprint Scope:</span>
+          <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Sprint Horizon:</span>
           <span style="font-weight:600; color:var(--accent-blue);" id="simScopeLabel">Live Clock (From Tonight)</span>
         </div>
         <div style="display:flex; gap:6px;">
-          <button class="section-pill-btn active" id="btnScopeLive" onclick="setSimScope('live')">⏱️ Live Clock</button>
-          <button class="section-pill-btn" id="btnScopeFull" onclick="setSimScope('full')">📅 Full Sprint (24)</button>
+          <button class="section-pill-btn active" id="btnScopeLive" onclick="setSimScope('live')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px; margin-right:3px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Live Clock</button>
+          <button class="section-pill-btn" id="btnScopeFull" onclick="setSimScope('full')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-1px; margin-right:3px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Full Sprint (24)</button>
         </div>
       </div>
 
@@ -3800,7 +4024,7 @@ body {
         <div class="sim-result-box full-width">
           <div class="sim-res-label">Regulatory Status on Nov 5</div>
           <div class="sim-status-banner" id="simStatusBanner">
-            <span class="sim-status-icon" id="simStatusIcon">✅</span>
+            <span class="sim-status-icon" id="simStatusIcon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>
             <span id="simStatusText">Eligible for Semester Examinations (≥ 75.00%)</span>
           </div>
         </div>
@@ -3958,9 +4182,9 @@ body {
         <button class="section-filter-btn" id="secBtn1" onclick="setRankSectionFilter('1')">Sec 1</button>
         <button class="section-filter-btn" id="secBtn2" onclick="setRankSectionFilter('2')">Sec 2</button>
         <button class="section-filter-btn" id="secBtnFull5" onclick="setRankSectionFilter('full5')" title="Filter only students who took all 5 theory exams">Full 5 Papers (115)</button>
-        <button class="section-filter-btn" id="secBtnSafe" onclick="setRankSectionFilter('safe')">🛡️ Safe (≥75%)</button>
-        <button class="section-filter-btn" id="secBtnDanger" onclick="setRankSectionFilter('danger')">⚡ At Risk</button>
-        <button class="section-filter-btn" id="secBtnCapped" onclick="setRankSectionFilter('impossible')">🚨 Capped (<75%)</button>
+        <button class="section-filter-btn" id="secBtnSafe" onclick="setRankSectionFilter('safe')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px; margin-right:3px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Safe (≥75%)</button>
+        <button class="section-filter-btn" id="secBtnDanger" onclick="setRankSectionFilter('danger')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px; margin-right:3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>At Risk</button>
+        <button class="section-filter-btn" id="secBtnCapped" onclick="setRankSectionFilter('impossible')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px; margin-right:3px;"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Capped (<75%)</button>
       </div>
       <div style="font-size:12px; font-family:var(--font-mono); color:var(--text-muted);" id="rankCountLabel">
         <!-- Injected -->
@@ -4038,7 +4262,7 @@ body {
         <span>Back</span>
       </button>
       <div class="modal-topbar-context" id="modalTopbarContext">Student Academic Profile</div>
-      <button class="modal-close-icon-btn" onclick="closeStudentModal()" title="Close (Esc)">✕</button>
+      <button class="modal-close-icon-btn" onclick="closeStudentModal()" title="Close (Esc)"><span class="kbd-esc-hint">ESC</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
     </div>
 
     <!-- Scrollable Page Body -->
@@ -4058,7 +4282,7 @@ body {
   <div class="modal-dialog" style="max-width:520px; max-height:85vh; display:flex; flex-direction:column; overflow:hidden;">
     <div class="modal-sticky-topbar">
       <div style="font-weight:700; font-size:15px; color:var(--text-main);">Select Your Profile</div>
-      <button class="modal-close-icon-btn" onclick="closeProfilePickerModal()">✕</button>
+      <button class="modal-close-icon-btn" onclick="closeProfilePickerModal()" title="Close (Esc)"><span class="kbd-esc-hint">ESC</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
     </div>
     <div style="padding:16px 20px; display:flex; flex-direction:column; overflow:hidden; flex:1;">
       <div style="font-size:13px; color:var(--text-muted); margin-bottom:12px; line-height:1.4;">
@@ -4543,16 +4767,16 @@ function renderVaultTab() {
   // 2. Render Category Filter Chips
   const catLabels = {
     'ALL': 'All Types',
-    'syllabus': '📋 Syllabi & Plans',
-    'unit1': '📖 Unit I Notes',
-    'unit2': '📖 Unit II Notes',
-    'unit3': '📖 Unit III Notes',
-    'unit4': '📖 Unit IV Notes',
-    'pyqs': '📜 PYQs & Model Papers',
-    'tests': '🎯 Tests & Quizzes',
-    'internals': '📑 Internal Exam Papers',
-    'assignments': '📝 Assignments',
-    'materials': '🔬 Lab Manuals & Modules'
+    'syllabus': 'Syllabi & Plans',
+    'unit1': 'Unit I Notes',
+    'unit2': 'Unit II Notes',
+    'unit3': 'Unit III Notes',
+    'unit4': 'Unit IV Notes',
+    'pyqs': 'PYQs & Papers',
+    'tests': 'Quizzes & Tests',
+    'internals': 'Internal Exams',
+    'assignments': 'Assignments',
+    'materials': 'Lab Manuals'
   };
 
   if (catPillsEl) {
@@ -4587,7 +4811,7 @@ function renderVaultTab() {
   if (filtered.length === 0) {
     gridEl.innerHTML = `
       <div style="grid-column: 1 / -1; text-align:center; padding:48px 20px; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:var(--radius-md);">
-        <div style="font-size:32px; margin-bottom:8px;">🔍</div>
+        <div style="margin-bottom:12px;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
         <div style="font-weight:700; color:var(--text-main); font-size:15px; margin-bottom:4px;">No PDF documents found</div>
         <div style="color:var(--text-muted); font-size:12.5px;">No files match "${vaultSearchQuery}". Try clearing filters.</div>
       </div>
@@ -4668,7 +4892,7 @@ function renderTeacherSyncBoard() {
           <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">All periods verified by respective subject faculty up to semester conclusion.</div>
         </div>
         <span style="font-size:11.5px; font-weight:700; color:#10b981; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.25); padding:3px 8px; border-radius:9999px;">
-          ✓ Fully Reconciled
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg>Fully Reconciled
         </span>
       </div>
       <div class="rollcall-periods-list">
@@ -4680,7 +4904,7 @@ function renderTeacherSyncBoard() {
               <span class="rollcall-faculty-tag">· ${p.teacher}</span>
             </div>
             <span class="rollcall-status-badge present">
-              ✓ Marked Present (${p.units} Unit${p.units > 1 ? 's' : ''})
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg>Marked Present (${p.units} Unit${p.units > 1 ? 's' : ''})
             </span>
           </div>
         `).join('')}
@@ -4738,6 +4962,13 @@ Statement:
 "Respected Teacher, I was present during the aforementioned class/lab session. However, the portal records show I was marked absent. Kindly review your attendance roll-call sheet and verify my physical/official presence. Thank you!"`;
 
   previewEl.textContent = msg;
+}
+
+function shareDisputeWhatsApp() {
+  const previewEl = document.getElementById('disputePreviewBox');
+  if (!previewEl) return;
+  const text = encodeURIComponent(previewEl.textContent);
+  window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 }
 
 function copyDisputeNotice() {
@@ -4802,17 +5033,17 @@ function renderAttendanceTab() {
   const runwaySummary = document.getElementById('heroRunwaySummary');
   if (overallRecovery.status === 'safe') {
     runwaySummary.innerHTML = `
-      <span style="color:var(--status-good-text);">🛡️ ${overallRecovery.headline}</span>
+      <span style="color:var(--status-good-text); display:inline-flex; align-items:center; gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>${overallRecovery.headline}</span>
       <span style="font-size:12px; font-weight:500; color:var(--text-muted); margin-left:6px;">(${overallRecovery.subnote})</span>
     `;
   } else if (overallRecovery.status === 'danger') {
     runwaySummary.innerHTML = `
-      <span style="color:var(--status-warn-text);">⚡ ${overallRecovery.headline}</span>
+      <span style="color:var(--status-warn-text); display:inline-flex; align-items:center; gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>${overallRecovery.headline}</span>
       <span style="font-size:12px; font-weight:500; color:var(--text-muted); margin-left:6px;">(${overallRecovery.subnote})</span>
     `;
   } else {
     runwaySummary.innerHTML = `
-      <span style="color:var(--status-bad-text);">🚨 ${overallRecovery.headline}</span>
+      <span style="color:var(--status-bad-text); display:inline-flex; align-items:center; gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>${overallRecovery.headline}</span>
       <span style="font-size:12px; font-weight:500; color:var(--text-muted); margin-left:6px;">(${overallRecovery.subnote})</span>
     `;
   }
@@ -4905,7 +5136,7 @@ function renderAttendanceTab() {
         } catch(e) {}
 
         const statusTag = isPast 
-          ? '<span style="font-size:10px; font-weight:700; color:var(--status-good-text); background:var(--status-good-bg); padding:1px 6px; border-radius:3px;">✓ Completed</span>'
+          ? '<span style="font-size:10px; font-weight:700; color:var(--status-good-text); background:var(--status-good-bg); padding:1px 6px; border-radius:3px; display:inline-flex; align-items:center; gap:3px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Completed</span>'
           : '<span style="font-size:10px; font-weight:700; color:var(--accent-blue); background:var(--bg-subtle); padding:1px 6px; border-radius:3px;">Upcoming</span>';
 
         return `
@@ -5058,8 +5289,8 @@ function renderTimetableTab() {
                   <span class="timeline-sub-code">${fullSubName}</span>
                 </div>
                 <div class="timeline-sub-meta">
-                  <span>👤 Faculty: <strong>${p.prof}</strong></span>
-                  <span>📍 Room: <strong>${p.room}</strong></span>
+                  <span style="display:inline-flex; align-items:center; gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Faculty: <strong>${p.prof}</strong></span>
+                  <span style="display:inline-flex; align-items:center; gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>Room: <strong>${p.room}</strong></span>
                 </div>
               </div>
               <div>
@@ -5187,15 +5418,15 @@ function renderSimulatorTab() {
   if (statusBanner && statusText) {
     if (projectedPct >= 75.0) {
       statusBanner.className = 'sim-status-banner pass';
-      if (statusIcon) statusIcon.textContent = '✅';
+      if (statusIcon) statusIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
       statusText.textContent = `ELIGIBLE FOR SEMESTER EXAMS (Projected ${projectedPct.toFixed(2)}% · +${(projectedPct - 75).toFixed(2)}% above threshold)`;
     } else if (projectedPct >= 70.0) {
       statusBanner.className = 'sim-status-banner condonation';
-      if (statusIcon) statusIcon.textContent = '⚠️';
+      if (statusIcon) statusIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
       statusText.textContent = `CONDONATION REQUIRED (Projected ${projectedPct.toFixed(2)}% · Deficit: ${(75 - projectedPct).toFixed(2)}% · Requires Dean Medical/DL waiver)`;
     } else {
       statusBanner.className = 'sim-status-banner detained';
-      if (statusIcon) statusIcon.textContent = '❌';
+      if (statusIcon) statusIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
       statusText.textContent = `CRITICAL SHORTAGE / DETAINED (Projected ${projectedPct.toFixed(2)}% · ${(75 - projectedPct).toFixed(2)}% below 75% regulatory requirement)`;
     }
   }
@@ -5353,11 +5584,11 @@ function renderSubjectEvaluationCard(p, subCode, subName) {
       </thead>
       <tbody>
         <!-- Class Tests Section -->
-        <tr class="eval-section-header"><td colspan="4">📝 Class Tests <span style="font-weight:500; color:var(--text-muted); font-size:11px;">— Best 2 of ${(p.ct_raw||[]).length} averaged</span></td></tr>
+        <tr class="eval-section-header"><td colspan="4"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:6px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Class Tests <span style="font-weight:500; color:var(--text-muted); font-size:11px;">— Best 2 of ${(p.ct_raw||[]).length} averaged</span></td></tr>
         ${ctRows}
 
         <!-- Mid-Term Section -->
-        <tr class="eval-section-header"><td colspan="4">📄 Mid-Term Examination <span style="font-weight:500; color:var(--text-muted); font-size:11px;">— Raw ÷ 3</span></td></tr>
+        <tr class="eval-section-header"><td colspan="4"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:6px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Mid-Term Examination <span style="font-weight:500; color:var(--text-muted); font-size:11px;">— Raw ÷ 3</span></td></tr>
         <tr>
           <td class="comp-name">Mid-Term</td>
           <td class="raw-cell ${midR.cls}">${midR.display}</td>
@@ -5366,15 +5597,15 @@ function renderSubjectEvaluationCard(p, subCode, subName) {
         </tr>
 
         <!-- Assignments Section -->
-        <tr class="eval-section-header"><td colspan="4">📋 Assignments <span style="font-weight:500; color:var(--text-muted); font-size:11px;">— Best 2 of ${(p.asg_raw||[]).length} averaged</span></td></tr>
+        <tr class="eval-section-header"><td colspan="4"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:6px;"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>Assignments <span style="font-weight:500; color:var(--text-muted); font-size:11px;">— Best 2 of ${(p.asg_raw||[]).length} averaged</span></td></tr>
         ${asgRows}
 
         <!-- Teacher Assessment Section -->
-        <tr class="eval-section-header"><td colspan="4">👨‍🏫 Teacher Assessment (TP-CO) <span style="font-weight:500; color:var(--text-muted); font-size:11px;">— Sum ÷ 8</span></td></tr>
+        <tr class="eval-section-header"><td colspan="4"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:6px;"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Teacher Assessment (TP-CO) <span style="font-weight:500; color:var(--text-muted); font-size:11px;">— Sum ÷ 8</span></td></tr>
         ${coRows}
 
         <!-- Presentation -->
-        <tr class="eval-section-header"><td colspan="4">🎤 Presentation <span style="font-weight:500; color:var(--text-muted); font-size:11px;">— Raw ÷ 2</span></td></tr>
+        <tr class="eval-section-header"><td colspan="4"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:6px;"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>Presentation <span style="font-weight:500; color:var(--text-muted); font-size:11px;">— Raw ÷ 2</span></td></tr>
         <tr>
           <td class="comp-name">Presentation</td>
           <td class="raw-cell ${presR.cls}">${presR.display}</td>
@@ -5383,7 +5614,7 @@ function renderSubjectEvaluationCard(p, subCode, subName) {
         </tr>
 
         <!-- Attendance -->
-        <tr class="eval-section-header"><td colspan="4">📊 Attendance Marks <span style="font-weight:500; color:var(--text-muted); font-size:11px;">— Formula-based</span></td></tr>
+        <tr class="eval-section-header"><td colspan="4"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block; vertical-align:-2px; margin-right:6px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Attendance Marks <span style="font-weight:500; color:var(--text-muted); font-size:11px;">— Continuous Evaluation</span></td></tr>
         <tr>
           <td class="comp-name">Attendance</td>
           <td class="raw-cell">${p.att_pct ? p.att_pct.toFixed(1) : 0}%</td>
@@ -5430,7 +5661,7 @@ function renderMarksTab() {
     document.getElementById('marksAvgPaperVal').innerHTML = `Avg ${avgPaperVal}/40 · <span style="color:var(--status-good-text); font-weight:600;">#${me.rank5 || 71} of ${totalValidStudents} (Full 5/5)</span>`;
   } else {
     document.getElementById('marksRankVal').innerHTML = `#${me.rank_all || rankDisplay} <span style="font-size:14px; color:var(--text-muted); font-weight:500;">of ${totalStudentsAll}</span>`;
-    document.getElementById('marksAvgPaperVal').innerHTML = `Avg ${avgPaperVal}/40 · <span class="badge-partial-exam">⚠️ ${me.papers_attempted || 0}/5 Papers</span>`;
+    document.getElementById('marksAvgPaperVal').innerHTML = `Avg ${avgPaperVal}/40 · <span class="badge-partial-exam"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px; margin-right:3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>${me.papers_attempted || 0}/5 Papers</span>`;
   }
   document.getElementById('topperNameSub').textContent = `${totals.best_student_name} (${totals.best_total.toFixed(2)})`;
 
@@ -5467,7 +5698,7 @@ function renderMarksTab() {
             <div class="paper-score-main">${score.toFixed(2)} <span style="font-size:12px; color:var(--text-muted)">/ 40</span></div>
             <div class="paper-delta-tag ${isAbove ? 'above' : 'below'}">${isAbove ? '+' : ''}${diff} vs class</div>
             <button class="btn-sub-rank-jump" onclick="event.stopPropagation(); openSubjectLeaderboard('${paper.key}')">
-              View ${paper.code} Leaderboard ➔
+              View ${paper.code} Leaderboard →
             </button>
           </div>
         </div>
@@ -5476,7 +5707,7 @@ function renderMarksTab() {
           ${renderSubjectEvaluationCard(p, paper.code, paper.name)}
 
           <div class="quirk-notice-tag">
-            <strong>⚠️ Note:</strong> ${paper.quirk}
+            <strong style="display:inline-flex; align-items:center; gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Audit Note:</strong> ${paper.quirk}
           </div>
         </div>
       </div>
@@ -5605,7 +5836,7 @@ function renderLeaderboardTab() {
     <div class="leaderboard-podium-grid">
       ${top1 ? `
         <div class="podium-card rank-1" onclick="openStudentModal('${top1.enrollment}')" style="cursor:pointer;">
-          <div class="podium-badge gold">🥇 1st Place (Topper)</div>
+          <div class="podium-badge gold"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>RANK 1 · TOPPER</div>
           <div class="podium-name">${top1.name}</div>
           <div class="podium-sub"><code>${top1.enrollment}</code> · Sec ${top1.section}</div>
           <div class="podium-score">${top1.score.toFixed(2)}${unit} <span style="font-size:12px; color:var(--text-muted); font-weight:500;">/ ${maxScore}</span></div>
@@ -5614,7 +5845,7 @@ function renderLeaderboardTab() {
 
       ${top2 ? `
         <div class="podium-card rank-2" onclick="openStudentModal('${top2.enrollment}')" style="cursor:pointer;">
-          <div class="podium-badge silver">🥈 2nd Place</div>
+          <div class="podium-badge silver"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>RANK 2 · MERIT</div>
           <div class="podium-name">${top2.name}</div>
           <div class="podium-sub"><code>${top2.enrollment}</code> · Sec ${top2.section}</div>
           <div class="podium-score">${top2.score.toFixed(2)}${unit} <span style="font-size:12px; color:var(--text-muted); font-weight:500;">/ ${maxScore}</span></div>
@@ -5623,7 +5854,7 @@ function renderLeaderboardTab() {
 
       ${top3 ? `
         <div class="podium-card rank-3" onclick="openStudentModal('${top3.enrollment}')" style="cursor:pointer;">
-          <div class="podium-badge bronze">🥉 3rd Place</div>
+          <div class="podium-badge bronze"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>RANK 3 · MERIT</div>
           <div class="podium-name">${top3.name}</div>
           <div class="podium-sub"><code>${top3.enrollment}</code> · Sec ${top3.section}</div>
           <div class="podium-score">${top3.score.toFixed(2)}${unit} <span style="font-size:12px; color:var(--text-muted); font-weight:500;">/ ${maxScore}</span></div>
@@ -5677,7 +5908,7 @@ function renderLeaderboardTab() {
     let deltaHtml = '';
     if (currentRankCategory === 'overall') {
       if (!item.isFull5) {
-        deltaHtml = `<span class="badge-partial-exam" title="Absent in: ${item.missingSubjects ? item.missingSubjects.join(', ') : 'Exams'}">⚠️ ${item.papersAttempted}/5 Papers</span>`;
+        deltaHtml = `<span class="badge-partial-exam" title="Absent in: ${item.missingSubjects ? item.missingSubjects.join(', ') : 'Exams'}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px; margin-right:3px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>${item.papersAttempted}/5 Papers</span>`;
       } else {
         deltaHtml = `<span style="font-family:var(--font-mono); font-size:11px; color:var(--text-muted);">Avg ${item.avgPerPaper.toFixed(2)}/40</span>`;
       }
@@ -5703,11 +5934,11 @@ function renderLeaderboardTab() {
               const effAtt = sRec.totalAttended + (sRec.dlRem || 0);
               const rec = computeScheduleRecovery(sRec.totalHeld, effAtt, targetPct, sRec.section);
               if (rec.status === 'safe') {
-                return `<span class="sprint-pill success" style="font-size:10px; padding:2px 6px;">🛡️ ${rec.canMiss} skips</span>`;
+                return `<span class="sprint-pill success" style="font-size:10px; padding:2px 6px; display:inline-flex; align-items:center; gap:3px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>${rec.canMiss} skips</span>`;
               } else if (rec.status === 'danger') {
-                return `<span class="sprint-pill warning" style="font-size:10px; padding:2px 6px;">⚡ Need ${rec.needed}</span>`;
+                return `<span class="sprint-pill warning" style="font-size:10px; padding:2px 6px; display:inline-flex; align-items:center; gap:3px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Need ${rec.needed}</span>`;
               } else {
-                return `<span class="sprint-pill alert" style="font-size:10px; padding:2px 6px;">🚨 Max ${rec.maxAchievablePct.toFixed(0)}%</span>`;
+                return `<span class="sprint-pill alert" style="font-size:10px; padding:2px 6px; display:inline-flex; align-items:center; gap:3px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Max ${rec.maxAchievablePct.toFixed(0)}%</span>`;
               }
             })()}
           </div>
@@ -6164,7 +6395,9 @@ function toggleTheme() {
 }
 
 // Toast notification
-function showToast(msg, icon = '✓') {
+function showToast(msg, icon = '') {
+  const defaultIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="display:inline-block; vertical-align:-1px; margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg>';
+  const iconSvg = icon || defaultIcon;
   let toast = document.getElementById('syncToast');
   if (!toast) {
     toast = document.createElement('div');
@@ -6172,7 +6405,7 @@ function showToast(msg, icon = '✓') {
     toast.className = 'sync-toast';
     document.body.appendChild(toast);
   }
-  toast.innerHTML = `<span class="toast-icon">${icon}</span> <span>${msg}</span>`;
+  toast.innerHTML = `<span class="toast-icon">${iconSvg}</span> <span>${msg}</span>`;
   toast.classList.add('active');
   clearTimeout(toast._timer);
   toast._timer = setTimeout(() => {
@@ -6578,10 +6811,10 @@ setTimeout(() => {
   <div class="modal-dialog" style="max-width:540px; display:flex; flex-direction:column; max-height:88vh; overflow:hidden;">
     <div class="modal-sticky-topbar">
       <div style="font-weight:700; font-size:15px; color:var(--text-main); display:flex; align-items:center; gap:8px;">
-        <span>📝</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         <span>Raise Attendance Grievance / Discrepancy</span>
       </div>
-      <button class="modal-close-icon-btn" onclick="closeDisputeModal()">✕</button>
+      <button class="modal-close-icon-btn" onclick="closeDisputeModal()" title="Close (Esc)"><span class="kbd-esc-hint">ESC</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
     </div>
     <div style="padding:18px 20px; overflow-y:auto; flex:1;">
       <div style="font-size:12.5px; color:var(--text-muted); margin-bottom:14px; line-height:1.45;">
@@ -6643,12 +6876,20 @@ setTimeout(() => {
         <div class="dispute-preview-box" id="disputePreviewBox"></div>
       </div>
 
-      <div style="display:flex; gap:10px; margin-top:14px;">
-        <button onclick="copyDisputeNotice()" style="flex:1; padding:10px 14px; background:#38bdf8; color:#0a0a0a; border:none; border-radius:var(--radius-sm); font-size:13px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          Copy Notice for WhatsApp / Email
+      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;">
+        <button onclick="copyDisputeNotice()" style="flex:1; min-width:140px; padding:10px 14px; background:#38bdf8; color:#0a0a0a; border:none; border-radius:var(--radius-sm); font-size:12.5px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Copy Notice
         </button>
-        <button onclick="closeDisputeModal()" style="padding:10px 16px; background:var(--bg-subtle); color:var(--text-muted); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); font-size:13px; font-weight:600; cursor:pointer;">
+        <button onclick="shareDisputeWhatsApp()" style="flex:1; min-width:130px; padding:10px 14px; background:rgba(16,185,129,0.15); color:#34d399; border:1px solid rgba(16,185,129,0.3); border-radius:var(--radius-sm); font-size:12.5px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          WhatsApp
+        </button>
+        <button onclick="window.print()" style="padding:10px 14px; background:var(--bg-subtle); color:var(--text-main); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); font-size:12.5px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print Letter
+        </button>
+        <button onclick="closeDisputeModal()" style="padding:10px 14px; background:none; color:var(--text-muted); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); font-size:12.5px; font-weight:600; cursor:pointer;">
           Close
         </button>
       </div>
